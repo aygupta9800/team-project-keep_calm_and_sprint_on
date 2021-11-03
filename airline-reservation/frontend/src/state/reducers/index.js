@@ -1,14 +1,10 @@
 import { combineReducers } from 'redux';
 import loginReducer from './loginReducer';
 import signUpReducer from './signUpReducer';
-import restaurantMenuReducer from './restaurantMenuReducer';
-import restaurantOrderReducer from './restaurantOrderReducer';
 
 const reducers = combineReducers({
   login: loginReducer,
-  signIn: signUpReducer,
-  menu: restaurantMenuReducer,
-  order: restaurantOrderReducer,
+  signIn: signUpReducer
 });
 
 const rootReducer = (state, action) => {
