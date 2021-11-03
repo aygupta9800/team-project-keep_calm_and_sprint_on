@@ -4,14 +4,12 @@ import mongoose from "mongoose";
 import cors from 'cors';
 import connectMongoDB from './utils/dbConnection.js';
 
-// import signup from "./routes/signup.js";
+import signup from "./routes/signup.js";
 // import login from "./routes/login.js";
 // import restaurants from "./routes/restaurants.js";
 // import customers from "./routes/customers.js";
 // import logout from './routes/logout.js';
 // import imageUpload from './routes/imageUpload.js';
-// import passport from "passport";
-// import usepassport from './middleware/passport.js';
 
 const app = express();
 // const {mongoDB} = config
@@ -20,23 +18,17 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3008', credentials: true }));
 
-// app.use("/signup", signup);
+app.use("/signup", signup);
 // app.use("/restaurants", restaurants);
-
-//Passport midlleware
-// app.use(passport.initialize());
-
-//passport config
-// usepassport(passport);
 
 // app.use("/login", login);
 // app.use("/customers", customers);
 // app.use("/logout", logout);
 // app.use("/imageUpload", imageUpload);
 
-const port = 3001;
+const port = 3009;
 
 
 // Use of another path to see results for js_refresher.js

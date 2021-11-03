@@ -4,12 +4,13 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     // _id: Number,
-    userType: { type: String, required: true, trim: true },
+    userType: { type: String, required: true, trim: true }, // ["user", "employee"]
     // empId: String
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true },
+    dob: {type: String },
     phone: { type: String, trim: true },
     token: {type: String, default: ''},
     address: {
