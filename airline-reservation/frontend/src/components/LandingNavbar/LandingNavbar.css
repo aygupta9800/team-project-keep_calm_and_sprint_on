@@ -1,0 +1,9 @@
+.toolbar {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    justify-content: space-between;
+}
+.appbar {
+    background: #222 !important;
+}
