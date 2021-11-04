@@ -19,7 +19,7 @@ export const ColorButton2 = withStyles(() => ({
     backgroundColor: '#C4AE78',
     '&:hover': {
       backgroundColor: '#C4AE78',
-      opacity: 0.6,
+      opacity: 0.9,
     },
   },
 }))(Button);
@@ -42,8 +42,9 @@ export const ColorButton4 = withStyles(() => ({
     textTransform: 'none',
     '&:hover': {
       backgroundColor: '#87cefa',
-      opacity: 0.6,
+      opacity: 0.9,
     },
   },
 }))(Button);
+
 
