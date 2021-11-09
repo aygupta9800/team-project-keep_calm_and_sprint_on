@@ -5,6 +5,7 @@ import cors from 'cors';
 import connectMongoDB from './utils/dbConnection.js';
 
 import signup from "./routes/signup.js";
+import login from "./routes/login.js"
 // import login from "./routes/login.js";
 // import restaurants from "./routes/restaurants.js";
 // import customers from "./routes/customers.js";
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(cors({ origin: 'http://localhost:3008', credentials: true }));
 
 app.use("/signup", signup);
+app.use("/login",login);
 // app.use("/restaurants", restaurants);
 
 // app.use("/login", login);
@@ -38,7 +40,7 @@ app.get('/', (req, res) => {
 
 connectMongoDB();
 
-const db = mongoose.connection;
+const db = mongoose.connection; 
 db.on('error', (error) => console.log(error))
 db.once('open', () => console.log('Connected to Database'));
 
