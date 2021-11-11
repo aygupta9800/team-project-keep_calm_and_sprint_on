@@ -6,6 +6,7 @@ import connectMongoDB from './utils/dbConnection.js';
 
 import signup from "./routes/signup.js";
 import login from "./routes/login.js"
+import employee from "./routes/employee.js"
 // import login from "./routes/login.js";
 // import restaurants from "./routes/restaurants.js";
 // import customers from "./routes/customers.js";
@@ -23,7 +24,7 @@ app.use(cors({ origin: 'http://localhost:3008', credentials: true }));
 
 app.use("/signup", signup);
 app.use("/login",login);
-// app.use("/restaurants", restaurants);
+app.use("/employee", employee);
 
 // app.use("/login", login);
 // app.use("/customers", customers);
