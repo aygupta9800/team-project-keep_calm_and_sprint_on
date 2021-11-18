@@ -10,29 +10,29 @@ const { token_key } = config;
 
 const router = express.Router();
 
-router.post('/login', async (req, res) => {
+router.post('/user', async (req, res) => {
     try {
-        //const { email, password, results} = req.body;
-        const email = req.body.email;
-        const password = req.body.password;
-        const results =  await Users.find({email: email});
-       // console.log(results[0]);
-        if (results.length>0) {
-            bcrypt.compare(password,results[0].password, function(error,result){
+        const { identifier, password, userType} = req.body;
+        let results = null;
+        if (userType === 'user') {
+            results =  await Users.findOne({mileageNumber: identifier});
+        }
+        if (userType === 'employee') {
+            results =  await Users.findOne({empId: identifier});
+        }
+        if (results) {
+            bcrypt.compare(password,results.password, function(error,result){
                 if(!error){
                     const token = jwt.sign({
                         data: {
-                            email: results[0].email,
-                            userType: results[0].userType
+                            email: results.email,
+                            userType: results.userType
                         }
                       }, token_key, { expiresIn: '1h' });
                       res.status(200).json({
                         token: token,
                         msg: 'LoggedIn successfully',
-                        data: {
-                         email: results[0].email,
-                         userType:results[0].userType
-                        }
+                        data: results,
                     })
                 }
             })
