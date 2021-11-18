@@ -8,9 +8,19 @@ import config from "../utils/config.js";
 import FlightDetail from "../Models/flightDetails.js";
 import flightsData from "../utils/flightData.js";
 
-const { token_key } = config;
-
 const router = express.Router();
+
+router.get('', async (req, res) => {
+    try {
+        const flights = await FlightDetail.find({});
+        res.status(200).json({ data: flights });
+    
+    } catch(error) {
+        console.log("error==", error);
+        return res.status(500).json({msg: 'error'});
+          
+    }  
+}); 
 
 router.post('/add', async (req, res) => {
     try {
