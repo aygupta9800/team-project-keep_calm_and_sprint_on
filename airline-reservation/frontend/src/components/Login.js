@@ -47,8 +47,10 @@ const Login = () => {
 
   const onLogIn = () => {
     if (userType === 'Employee') {
+      history.push('/EmployeeDashboard');
       // dispatch(restaurantLogin({ userId, password }, history));
     } else {
+      history.push('CustomerDashboard');
       // dispatch(customerLogin({ userId, password }, history));
     }
   };
