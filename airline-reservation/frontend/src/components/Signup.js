@@ -1,13 +1,120 @@
-import React from 'react';
-// import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
+import { ColorButton4 } from '../constants/index'
+import {
+  Grid,
+  TextField,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+  FormControl,
+} from '@material-ui/core';
+import '../components/styles.css';
+
+// CSS styles
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    background: 'white',
+    padding: '20px',
+    margin: '10px',
+    width: '40%',
+    [theme.breakpoints.down('sm')]: {
+      width: '95%',
+    },
+  }
+}));
 
 const Signup = () => {
+  const classes = useStyles();
+  const [userType, setUserType] = useState('Employee');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleOnChangeUserName = (event) => {
+    setUserName(event.target.value);
+  };
+
+  const handleOnChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleOnChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const onLogIn = () => {
+    if (userType === 'Employee') {
+      // dispatch(restaurantLogin({ userId, password }, history));
+    } else {
+      // dispatch(customerLogin({ userId, password }, history));
+    }
+  };
+
   return (
     <div>
       <LandingNavbar  />
-      <h1 style={{display: 'flex', alignItems: 'center', justifyContent: 'center',
-    height: '100vh'}}>This is Sign up component</h1>
+        <div className="landingpage">
+          <Grid className={classes.wrapper}>
+            <FormControl component="fieldset">
+              <RadioGroup row aria-label="user" name="row-radio-buttons-group" value={userType} onChange={(e) => { setUserType(e.target.value); }}>
+                <FormControlLabel value="Customer" control={<Radio />} label="Customer" />
+                <FormControlLabel value="Employee" control={<Radio />} label="Employee" />
+              </RadioGroup>
+            </FormControl>
+            <TextField
+              label='User Name'
+              variant="outlined"
+              placeholder={userType === 'Employee' ? 'Employee Id' : 'Mileage Number'}
+              fullWidth
+              required
+              value={userName}
+              onChange={(e) => {
+                handleOnChangeUserName(e);
+              }}
+              style={{margin:'20px auto', background:'white'}}
+            />
+            <TextField
+                placeholder="Enter Email Id"
+                value={email}
+                onChange={(e) => {
+                  handleOnChangeEmail(e);
+                }}
+                required
+                label="Email"
+                variant="outlined"
+                fullWidth
+              />
+            <TextField
+              label='Password'
+              variant="outlined"
+              placeholder='Enter password'
+              type='password'
+              fullWidth
+              required
+              value={password}
+              onChange={(e) => {
+                handleOnChangePassword(e);
+              }}
+              style={{margin:'20px auto', background:'white'}}
+            />
+            <ColorButton4
+              variant='contained'
+              onClick={(e) => { onLogIn(e); }}
+              style={{ height: '50px', alignSelf: 'center', width: '100%', marginBottom: '10px'}}
+            >
+              Signup
+            </ColorButton4>
+            <a href="/Login" className='loginAnchor'>Existing user? Login Here</a>
+            </Grid>
+          </div>
     </div>
   );
 };

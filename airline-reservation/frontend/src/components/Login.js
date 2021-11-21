@@ -1,42 +1,103 @@
-import React from 'react';
-// import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
-import { ColorButton2 } from '../constants/index';
+import { ColorButton4 } from '../constants/index'
+import {
+  Grid,
+  TextField,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+  FormControl,
+} from '@material-ui/core';
 import '../components/styles.css';
-import { Grid,Paper, Avatar, TextField, Button, Typography,Link } from '@material-ui/core'
 
-
+// CSS styles
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    background: 'white',
+    padding: '20px',
+    margin: '10px',
+    width: '40%',
+    [theme.breakpoints.down('sm')]: {
+      width: '95%',
+    },
+  }
+}));
 
 const Login = () => {
+  const classes = useStyles();
+  const [userType, setUserType] = useState('Employee');
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
 
-  const paperStyle={padding :20,height:'70vh',width:360, margin:"20px auto"}
-  
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleOnChangeUserId = (event) => {
+    setUserId(event.target.value);
+  };
+
+  const handleOnChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const onLogIn = () => {
+    if (userType === 'Employee') {
+      // dispatch(restaurantLogin({ userId, password }, history));
+    } else {
+      // dispatch(customerLogin({ userId, password }, history));
+    }
+  };
+
   return (
     <div>
       <LandingNavbar  />
-      <div className="landingpage">
-        
-      <Grid>
-                <Grid align='center'>
-                <Avatar src="/broken-image.jpg" />
-                    <h2 style={{fontSize:'35px'}}>Login</h2>
-                </Grid>
-                <TextField label='Username' variant="outlined" placeholder='Enter username' fullWidth required style={{margin:'20px auto', background:'white'}}/>
-                <TextField label='Password' variant="outlined" placeholder='Enter password' type='password' fullWidth required style={{margin:'20px auto', background:'white'}}/>
-                
-             <ColorButton2
-            variant='contained'
-            onClick={() => {
-            }}
-            style={{ height: '55px', alignSelf: 'center',margin:'20px auto'}}
-          >
-            Login
-          </ColorButton2>
-                
-            
-        </Grid>
-
-     
+        <div className="landingpage">
+          <Grid className={classes.wrapper}>
+            <FormControl component="fieldset">
+              <RadioGroup row aria-label="user" name="row-radio-buttons-group" value={userType} onChange={(e) => { setUserType(e.target.value); }}>
+                <FormControlLabel value="Customer" control={<Radio />} label="Customer" />
+                <FormControlLabel value="Employee" control={<Radio />} label="Employee" />
+              </RadioGroup>
+            </FormControl>
+            <TextField
+              label='UserId'
+              variant="outlined"
+              placeholder={userType === 'Employee' ? 'Employee Id' : 'Mileage Number'}
+              fullWidth
+              required
+              value={userId}
+              onChange={(e) => {
+                handleOnChangeUserId(e);
+              }}
+              style={{margin:'20px auto', background:'white'}}
+            />
+            <TextField
+              label='Password'
+              variant="outlined"
+              placeholder='Enter password'
+              type='password'
+              fullWidth
+              required
+              value={password}
+              onChange={(e) => {
+                handleOnChangePassword(e);
+              }}
+              style={{margin:'20px auto', background:'white'}}
+            />
+            <ColorButton4
+              variant='contained'
+              onClick={(e) => { onLogIn(e); }}
+              style={{ height: '50px', alignSelf: 'center', width: '100%', marginBottom: '10px'}}
+            >
+              Login
+            </ColorButton4>
+            <a href="/Signup" className='loginAnchor'>New user? Register Here</a>
+            </Grid>
           </div>
     </div>
   );
