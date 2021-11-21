@@ -7,10 +7,12 @@ const flightDetailSchema = new Schema({
     source: { type: String, required: true, trim: true },
     destination: { type: String, required: true, trim: true },
     arrivalDateTime: String,
-    deptartureDateTime: String,
-    duration: Number, // In minutes or hours
+    deptartureDateTime: { type: String},
     miles: Number, // distance in miles btw src and dest
     basePrice: Number, // Minimum base price to book ticket in flight
+    duration: String, // In minutes or hours
+    startTime: String, 
+    endTime: String,
 },
 { 
     versionKey: false 
