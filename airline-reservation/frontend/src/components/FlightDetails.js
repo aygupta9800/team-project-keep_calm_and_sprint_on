@@ -31,17 +31,19 @@ function FlightDetails(props) {
 
     useEffect(() => {
         const rows = [];
-        for (let item of flightDetails.data) {
-            rows.push({id: item._id,
-                duration: item.duration,
-                timings: `${item.startTime} - ${item.endTime}`,
-                origin: item.source,
-                destination: item.destination,
-                price: item.basePrice
-            });
+        if (flightDetails.data) {
+            for (let item of flightDetails.data) {
+                rows.push({id: item._id,
+                    duration: item.duration,
+                    timings: `${item.startTime} - ${item.endTime}`,
+                    origin: item.source,
+                    destination: item.destination,
+                    price: item.basePrice
+                });
+            }
         }
         setRows(rows);
-    }, []);
+    }, [flightDetails]);
 
     return (
         <div>
@@ -53,11 +55,13 @@ function FlightDetails(props) {
                 </div>
                 <div style={{margin: '20px 0 20px 0', width: '90%'}}>
                 <table style={{width: '100%', height:'50px', border: '1px solid black', background: '#fff'}}>
-                    <tr>
-                        <td>From: {searchDetails.source[0]}</td>
-                        <td>To: {searchDetails.destination[0]}</td>
-                        <td>Flight Date: {searchDetails.dateTime[0].toLocaleDateString()}</td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>From: {searchDetails.source[0]}</td>
+                            <td>To: {searchDetails.destination[0]}</td>
+                            <td>Flight Date: {searchDetails.dateTime[0] ? searchDetails.dateTime[0].toLocaleDateString() : ''}</td>
+                        </tr>
+                    </tbody>
                     </table>
                 </div>
                <StickyHeadTable columns={columns} rows={rows} />
