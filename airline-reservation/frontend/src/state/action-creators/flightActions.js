@@ -14,8 +14,8 @@ export const storeSearchParams = (searchDetails, history) => async (dispatch) =>
     });
 };
 
-export const flightDetails = () => async (dispatch) => {
-  axios.post(`${server}/endpoint`)
+export const getFlightDetails = () => async (dispatch) => {
+  axios.get(`${server}/flight`)
     .then((response) => {
       dispatch({
         type: GET_FLIGHT_DETAILS,

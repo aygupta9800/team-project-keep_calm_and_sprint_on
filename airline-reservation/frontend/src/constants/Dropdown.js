@@ -46,7 +46,6 @@ const Dropdown = (props) => {
         <Select
           labelId='demo-multiple-name-label'
           id='demo-multiple-name'
-          multiple
           value={props.valueString}
           onChange={handleChange}
           input={<OutlinedInput label={props.label} />}

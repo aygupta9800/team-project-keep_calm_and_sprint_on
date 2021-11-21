@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { airports, ColorButton4 } from '../constants/index';
-import { storeSearchParams } from '../state/action-creators/flightActions'
+import { storeSearchParams, getFlightDetails } from '../state/action-creators/flightActions'
 import Dropdown from '../constants/Dropdown.js';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import BasicDateRangePicker from '../constants/DatePicker';
@@ -63,6 +63,7 @@ const SearchFlights = () => {
             variant='contained'
             onClick={() => {
               dispatch(storeSearchParams({source: from, destination: to, dateTime: value}));
+              dispatch(getFlightDetails());
               history.push('/FlightDetails')
             }}
             className={classes.button}
