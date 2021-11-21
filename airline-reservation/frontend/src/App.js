@@ -4,6 +4,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './components';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import CustomerDashboard from './components/Dashboard/CustomerDashboard';
+import EmployeeDashboard from './components/Dashboard/EmployeeDashboard';
 import SearchFlights from './components/SearchFlights';
 import FlightDetails from './components/FlightDetails';
 
@@ -18,6 +20,8 @@ function App() {
       <Route exact path="/Login" component={Login} />
       <Route exact path="/SearchFlights" component={SearchFlights} />
       <Route exact path="/FlightDetails" component={FlightDetails} />
+      <Route exact path="/CustomerDashboard" component={CustomerDashboard} />
+      <Route exact path="/EmployeeDashboard" component={EmployeeDashboard} />
     </>
   );
 }
