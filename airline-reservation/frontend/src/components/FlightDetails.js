@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
@@ -7,6 +8,8 @@ import './styles.css';
 
 function FlightDetails(props) {
     const history = useHistory();
+    const searchDetails = useSelector((state) => state.flight.searchParams);
+    console.log(searchDetails);
     const columns = [
         { id: 'duration', label: 'Duration', minWidth: 170 },
         { id: 'timings', label: 'Flight Timings', minWidth: 100 },
@@ -25,7 +28,8 @@ function FlightDetails(props) {
       ];
     
     const rows = [
-        {
+        {   
+            id: 1,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -33,6 +37,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 2,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -40,6 +45,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 3,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -47,6 +53,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 4,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -54,6 +61,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 5,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -61,6 +69,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 6,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -68,6 +77,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 7,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -75,6 +85,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 8,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -82,6 +93,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 9,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -89,6 +101,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 10,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -96,6 +109,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 11,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -103,6 +117,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 12,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -110,6 +125,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 13,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -117,6 +133,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 14,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',
@@ -124,6 +141,7 @@ function FlightDetails(props) {
             price: '650$'
         },
         {
+            id: 15,
             duration: '16h 45m',
             timings: '7:00AM - 4:15PM',
             origin: 'San Jose',

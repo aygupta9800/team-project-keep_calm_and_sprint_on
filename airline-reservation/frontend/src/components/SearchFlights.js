@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { ColorButton2, ColorButton4 } from '../constants/index';
+import { airports, ColorButton4 } from '../constants/index';
+import { storeSearchParams } from '../state/action-creators/flightActions'
 import Dropdown from '../constants/Dropdown.js';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import BasicDateRangePicker from '../constants/DatePicker';
@@ -43,17 +45,10 @@ const useStyles = makeStyles((theme) => ({
 const SearchFlights = () => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [from, setFromValue] = useState([]);
   const [to, setToValue] = useState([]);
   const [value, setValue] = useState([null, null]);
-  const countries = [
-    'USA',
-    'India',
-    'Russia',
-    'Canada',
-    'Germany',
-    'Australia'
-  ]
   console.log(value);
   return (
     <div>
@@ -61,18 +56,19 @@ const SearchFlights = () => {
       <div className='landingpage'>
         <h1 className={classes.title}>It's more than just a trip</h1>
         <div className={classes.fields}>
-          <Dropdown valueString={from} setValueString={setFromValue} listItems={countries} label='From Where?' style={{width: '20%'}} />
-          <Dropdown valueString={to} setValueString={setToValue} listItems={countries} label='Where to?' style={{width: '20%'}} />
+          <Dropdown valueString={from} setValueString={setFromValue} listItems={airports} label='From Where?' style={{width: '20%'}} />
+          <Dropdown valueString={to} setValueString={setToValue} listItems={airports} label='Where to?' style={{width: '20%'}} />
           <BasicDateRangePicker value={value} setValue={setValue} className={classes.picker} />
-          <ColorButton2
+          <ColorButton4
             variant='contained'
             onClick={() => {
+              dispatch(storeSearchParams({source: from, destination: to, dateTime: value}));
               history.push('/FlightDetails')
             }}
             className={classes.button}
           >
             Search
-          </ColorButton2>
+          </ColorButton4>
         </div>
       </div>
     </div>
