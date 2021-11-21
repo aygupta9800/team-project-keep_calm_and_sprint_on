@@ -7,9 +7,10 @@ import {
   AppBar,
   Toolbar,
   Box,
+  Button
 } from '@material-ui/core';
 import { ColorButton2, ColorButton4 } from '../../constants/index';
-import logo from '../../images/airline.svg';
+import logo from '../../images/icon.svg';
 import './LandingNavbar.css';
 
 // CSS styles
@@ -36,7 +37,7 @@ const LandingNavbar = (props) => {
           <Toolbar className='toolbar'>
             <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt='' onClick={() => {history.push('/');}}/>
             <div>
-            <ColorButton2
+            <Button
               variant='contained'
               onClick={() => {
                 history.push('/Login');
@@ -44,7 +45,7 @@ const LandingNavbar = (props) => {
               style={{marginRight: '20px'}}
             >
               Login
-            </ColorButton2>
+            </Button>
             <ColorButton4
               variant='contained'
               onClick={() => {

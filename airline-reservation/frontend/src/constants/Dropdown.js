@@ -41,8 +41,7 @@ const Dropdown = (props) => {
   };
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }} style={{background: 'white'}}>
+    <FormControl sx={{ m: 1, width: 390 }} style={{background: 'white'}}>
         <InputLabel id='demo-multiple-name-label'>{props.label}</InputLabel>
         <Select
           labelId='demo-multiple-name-label'
@@ -64,7 +63,6 @@ const Dropdown = (props) => {
           ))}
         </Select>
       </FormControl>
-    </div>
   );
 }
 Dropdown.propTypes = {

@@ -4,6 +4,7 @@ import {
 
 const initialState = {
   // define initial state here
+  flightDetails: []
 };
 
 const reducer = (state = initialState, action) => {

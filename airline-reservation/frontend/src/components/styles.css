@@ -11,3 +11,9 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; */
 }
+
+.loginAnchor {
+    color: blue;
+    text-decoration: none;
+    padding: 20px;
+  }

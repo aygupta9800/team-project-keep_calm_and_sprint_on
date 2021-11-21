@@ -1,6 +1,5 @@
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import { orange } from '@material-ui/core/colors';
 
 export const ColorButton = withStyles(() => ({
   root: {
@@ -16,9 +15,9 @@ export const ColorButton = withStyles(() => ({
 export const ColorButton2 = withStyles(() => ({
   root: {
     color: '#222',
-    backgroundColor: '#C4AE78',
+    backgroundColor: '#87cefa',
     '&:hover': {
-      backgroundColor: '#C4AE78',
+      backgroundColor: '#87cefa',
       opacity: 0.9,
     },
   },
@@ -38,13 +37,27 @@ export const ColorButton3 = withStyles(() => ({
 export const ColorButton4 = withStyles(() => ({
   root: {
     color: '#222',
-    backgroundColor: '#87cefa',
+    backgroundColor: 'orange',
     textTransform: 'none',
     '&:hover': {
-      backgroundColor: '#87cefa',
+      backgroundColor: 'orange',
       opacity: 0.9,
     },
   },
 }))(Button);
+
+export const airports = [
+  'San Jose',
+  'Phoenix',
+  'Birmingham',
+  'San Francisco',
+  'Colorado Springs',
+  'New Haven',
+  'Melbourne',
+  'Tallahasse',
+  'Savannah',
+  'Honolulu',
+  'Indianapolis',
+]
 
 
