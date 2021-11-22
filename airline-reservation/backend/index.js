@@ -5,9 +5,11 @@ import cors from 'cors';
 import connectMongoDB from './utils/dbConnection.js';
 
 import signup from "./routes/signup.js";
-import login from "./routes/login.js"
-import employee from "./routes/employee.js"
-import flight from "./routes/flights.js" 
+import login from "./routes/login.js";
+import employee from "./routes/employee.js";
+import flight from "./routes/flights.js" ;
+import profile from "./routes/profile.js";
+import airline from "./routes/airline.js";
 // import login from "./routes/login.js";
 // import restaurants from "./routes/restaurants.js";
 // import customers from "./routes/customers.js";
@@ -27,6 +29,8 @@ app.use("/signup", signup);
 app.use("/login",login);
 app.use("/employee", employee);
 app.use("/flight", flight);
+app.use("/profile", profile);
+app.use("/airline", airline);
 
 // app.use("/login", login);
 // app.use("/customers", customers);
