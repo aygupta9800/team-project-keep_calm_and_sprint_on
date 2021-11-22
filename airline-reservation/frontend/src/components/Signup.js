@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import { ColorButton4 } from '../constants/index'
@@ -34,9 +32,7 @@ const Signup = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const handleOnChangeUserName = (event) => {
     setUserName(event.target.value);
