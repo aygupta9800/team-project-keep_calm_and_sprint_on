@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import { ColorButton4 } from '../constants/index'
@@ -33,9 +31,7 @@ const Login = () => {
   const [userType, setUserType] = useState('Employee');
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const handleOnChangeUserId = (event) => {
     setUserId(event.target.value);
@@ -47,10 +43,10 @@ const Login = () => {
 
   const onLogIn = () => {
     if (userType === 'Employee') {
-      history.push('/EmployeeDashboard');
+      history.push({pathname: '/Airline', state: {userType: 'Employee'} });
       // dispatch(restaurantLogin({ userId, password }, history));
     } else {
-      history.push('CustomerDashboard');
+      history.push({pathname: '/Airline', state: {userType: 'Customer'} });
       // dispatch(customerLogin({ userId, password }, history));
     }
   };
