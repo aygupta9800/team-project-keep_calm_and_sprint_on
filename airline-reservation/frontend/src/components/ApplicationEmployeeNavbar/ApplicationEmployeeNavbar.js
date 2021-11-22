@@ -83,7 +83,7 @@ const ApplicationCustomerNavbar = (props) => {
           className={classes.menuSliderContainer}
           onClick={toggleSlider(slider, false)}
       >
-          <Avatar className={classes.avatar} src={logo} alt='Kesha Shah' />
+          <Avatar className={classes.avatar} src={logo} alt='Employee' />
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
@@ -109,7 +109,7 @@ const ApplicationCustomerNavbar = (props) => {
                 anchor='left'>
                 {sideList('left')}
             </MobileeRightMenuSlider>
-            <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt='' onClick={() => {history.push('/');}}/>
+            <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt=''/>
           </Toolbar>
         </AppBar>
       </Box>
