@@ -12,10 +12,15 @@ const bookingSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "FlightDetail"
     },
-   seatId: {
+    seatId: {
        type: mongoose.Schema.Types.ObjectId,
        ref: "Seat"
-   }
+    },
+    bookingDateTime: String,
+    totalPricePaid: Number,
+    totalPassengers: Number,
+    identityNumber: String,
+    flightClass: String,
 },
 { 
     versionKey: false 
