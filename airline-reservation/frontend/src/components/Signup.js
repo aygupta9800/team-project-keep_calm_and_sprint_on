@@ -48,10 +48,10 @@ const Signup = () => {
 
   const onLogIn = () => {
     if (userType === 'Employee') {
-      history.push('/EmployeeDashboard');
+      history.push({pathname: '/Airline', state: {userType: 'Employee'} });
       // dispatch(restaurantLogin({ userId, password }, history));
     } else {
-      history.push('CustomerDashboard');
+      history.push({pathname: '/Airline', state: {userType: 'Customer'} });
       // dispatch(customerLogin({ userId, password }, history));
     }
   };
