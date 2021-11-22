@@ -8,6 +8,11 @@ import CustomerDashboard from './components/Dashboard/CustomerDashboard';
 import EmployeeDashboard from './components/Dashboard/EmployeeDashboard';
 import SearchFlights from './components/SearchFlights';
 import FlightDetails from './components/FlightDetails';
+import ViewBookings from './components/Bookings/ViewBookings';
+import ViewFlights from './components/Bookings/ViewFlights';
+import CustomerProfile from './components/Profile/CustomerProfile';
+import EmployeeProfile from './components/Profile/EmployeeProfile';
+import Airline from './components/Airline';
 
 import './App.css';
 
@@ -22,6 +27,11 @@ function App() {
       <Route exact path="/FlightDetails" component={FlightDetails} />
       <Route exact path="/CustomerDashboard" component={CustomerDashboard} />
       <Route exact path="/EmployeeDashboard" component={EmployeeDashboard} />
+      <Route exact path="/Airline" component={Airline} />
+      <Route exact path="/CustomerProfile" component={CustomerProfile} />
+      <Route exact path="/EmployeeProfile" component={EmployeeProfile} />
+      <Route exact path="/Bookings" component={ViewBookings} />
+      <Route exact path="/ViewFlights" component={ViewFlights} />
     </>
   );
 }
