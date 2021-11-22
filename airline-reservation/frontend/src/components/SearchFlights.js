@@ -61,9 +61,9 @@ const SearchFlights = () => {
           <BasicDateRangePicker value={value} setValue={setValue} className={classes.picker} />
           <ColorButton4
             variant='contained'
-            onClick={() => {
+            onClick={async () => {
               dispatch(storeSearchParams({source: from, destination: to, dateTime: value}));
-              dispatch(getFlightDetails());
+              await dispatch(getFlightDetails());
               history.push('/FlightDetails')
             }}
             className={classes.button}
