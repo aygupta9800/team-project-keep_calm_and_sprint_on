@@ -55,7 +55,7 @@ const Login = () => {
     }
   };
 
-  return (
+  return (  
     <div>
       <LandingNavbar  />
         <div className="landingpage">
