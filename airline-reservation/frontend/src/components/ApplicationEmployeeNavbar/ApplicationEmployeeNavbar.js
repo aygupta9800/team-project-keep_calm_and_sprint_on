@@ -87,7 +87,7 @@ const ApplicationCustomerNavbar = (props) => {
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
-                  <ListItem button key={key} component={Link} to={listItem.listPath} componentsProps={{userType: 'Employee'}}>
+                  <ListItem button key={key} component={Link} to={{pathname: listItem.listPath, state: {userType: 'Employee'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
                       <ListItemText className={classes.listItem} primary={listItem.listText} />
                   </ListItem>

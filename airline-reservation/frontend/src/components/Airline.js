@@ -7,7 +7,7 @@ import './styles.css';
 const Airline = (props) => {
     return (
         <div>
-            {(props.userType === 'Employee' || props.location.state.userType === 'Employee')
+            {(props.location.state.userType === 'Employee')
             ? <ApplicationEmployeeNavbar  />
             : <ApplicationCustomerNavbar />}
             <div className='landingpage'>
