@@ -1,0 +1,7 @@
+body {
+  background: url(images/map2.jpeg) no-repeat center center fixed;
+  -webkit-background: cover;
+  -moz-background: cover;
+  -o-background: cover;
+  background-size: cover;
+}
