@@ -10,14 +10,18 @@ const { token_key } = config;
 
 const router = express.Router();
 
+// router.get('/users', async(req,res)=>{
+//     res.status(200).json(await Users.find());
+// })
+
 router.post('/user', async (req, res) => {
     try {
         const { identifier, password, userType} = req.body;
         let results = null;
-        if (userType === 'user') {
+        if (userType === 'User') {
             results =  await Users.findOne({mileageNumber: identifier});
         }
-        if (userType === 'employee') {
+        if (userType === 'Employee') {
             results =  await Users.findOne({empId: identifier});
         }
         if (results) {
