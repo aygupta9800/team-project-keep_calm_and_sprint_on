@@ -22,10 +22,10 @@ export const userLogin = (userDetails, history) => async (dispatch) => {
       type:USER_SIGNUP,
       payload: response.data
       })
-      if(userDetails.userType==='Employee'){
-        history.push({pathname: '/Airline', state: {userType: 'Employee'} });
+      if(userDetails.userType==='employee'){
+        history.push({pathname: '/Airline', state: {userType: 'employee'} });
       }else{
-        history.push({pathname: '/Airline', state: {userType: 'Customer'} });
+        history.push({pathname: '/Airline', state: {userType: 'customer'} });
       }
       return true;
     })
@@ -44,10 +44,10 @@ export const userSignup = (userDetails, history) => async (dispatch) => {
         type:USER_SIGNUP,
         payload: response.data
         })
-        if(userDetails.userType==='Employee'){
-          history.push({pathname: '/Airline', state: {userType: 'Employee'} });
+        if(userDetails.userType==='employee'){
+          history.push({pathname: '/Airline', state: {userType: 'employee'} });
         }else{
-          history.push({pathname: '/Airline', state: {userType: 'Customer'} });
+          history.push({pathname: '/Airline', state: {userType: 'customer'} });
         }
       return true;
     })

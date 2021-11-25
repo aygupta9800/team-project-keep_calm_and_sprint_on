@@ -21,7 +21,7 @@ router.post('/user', async (req, res) => {
         if (userType === 'User') {
             results =  await Users.findOne({mileageNumber: identifier});
         }
-        if (userType === 'Employee') {
+        if (userType === 'employee') {
             results =  await Users.findOne({empId: identifier});
         }
         if (results) {
