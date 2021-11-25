@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
-  const [userType, setUserType] = useState('Employee');
+  const [userType, setUserType] = useState('employee');
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
@@ -42,11 +42,11 @@ const Login = () => {
   };
 
   const onLogIn = () => {
-    if (userType === 'Employee') {
-      history.push({pathname: '/Airline', state: {userType: 'Employee'} });
+    if (userType === 'employee') {
+      history.push({pathname: '/Airline', state: {userType: 'employee'} });
       // dispatch(restaurantLogin({ userId, password }, history));
     } else {
-      history.push({pathname: '/Airline', state: {userType: 'Customer'} });
+      history.push({pathname: '/Airline', state: {userType: 'customer'} });
       // dispatch(customerLogin({ userId, password }, history));
     }
   };
@@ -65,7 +65,7 @@ const Login = () => {
             <TextField
               label='UserId'
               variant="outlined"
-              placeholder={userType === 'Employee' ? 'Employee Id' : 'Mileage Number'}
+              placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
               fullWidth
               required
               value={userId}
