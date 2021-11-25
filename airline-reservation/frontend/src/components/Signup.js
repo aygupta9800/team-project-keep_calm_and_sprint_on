@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
   const classes = useStyles();
-  const [userType, setUserType] = useState('Employee');
+  const [userType, setUserType] = useState('employee');
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,7 +51,7 @@ const Signup = () => {
   };
 
   const onLogIn = () => {
-    if (userType === 'Employee') {
+    if (userType === 'employee') {
       history.push('/EmployeeDashboard');
       // dispatch(restaurantLogin({ userId, password }, history));
     } else {
@@ -67,14 +67,14 @@ const Signup = () => {
           <Grid className={classes.wrapper}>
             <FormControl component="fieldset">
               <RadioGroup row aria-label="user" name="row-radio-buttons-group" value={userType} onChange={(e) => { setUserType(e.target.value); }}>
-                <FormControlLabel value="Customer" control={<Radio />} label="Customer" />
-                <FormControlLabel value="Employee" control={<Radio />} label="Employee" />
+                <FormControlLabel value="user" control={<Radio />} label="Customer" />
+                <FormControlLabel value="employee" control={<Radio />} label="Employee" />
               </RadioGroup>
             </FormControl>
             <TextField
               label='User Name'
               variant="outlined"
-              placeholder={userType === 'Employee' ? 'Employee Id' : 'Mileage Number'}
+              placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
               fullWidth
               required
               value={userName}
