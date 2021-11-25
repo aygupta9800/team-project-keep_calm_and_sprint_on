@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import MobileeRightMenuSlider from '@material-ui/core/Drawer';
 import {
@@ -14,14 +12,13 @@ import {
     Avatar,
     Divider,
     List,
-    Typography,
     Box
 } from '@material-ui/core';
 import DehazeIcon from '@material-ui/icons/Dehaze';
-import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { ColorButton2, ColorButton4 } from '../../constants/index';
 import logo from '../../images/icon.svg';
 import '../LandingNavbar/LandingNavbar.css';
 
@@ -48,14 +45,19 @@ const useStyles = makeStyles(theme=>({
 
 const menuItems = [
     {
-        listIcon: <ConfirmationNumberIcon style={{color: 'orange'}} />,
-        listText: 'Upcoming Events',
-        listPath: '/UpcomingEvents'
+        listIcon: <LocalAirportIcon style={{color: 'orange'}} />,
+        listText: 'View Airline',
+        listPath: '/Airline'
     },
     {
         listIcon: <PersonIcon style={{color: 'orange'}} />,
         listText: 'Profile',
-        listPath: '/profile'
+        listPath: '/CustomerProfile'
+    },
+    {
+        listIcon: <FlightTakeoffIcon style={{color: 'orange'}} />,
+        listText: 'Flights',
+        listPath: '/ViewFlights'
     },
     {
         listIcon: <LogoutIcon style={{color: 'orange'}} />,
@@ -66,9 +68,6 @@ const menuItems = [
 
 const ApplicationCustomerNavbar = (props) => {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const location = useLocation();
-
   const classes = useStyles();
 
   const [state, setState] = useState({
@@ -84,11 +83,11 @@ const ApplicationCustomerNavbar = (props) => {
           className={classes.menuSliderContainer}
           onClick={toggleSlider(slider, false)}
       >
-          <Avatar className={classes.avatar} src={logo} alt='Kesha Shah' />
+          <Avatar className={classes.avatar} src={logo} alt='Customer' />
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
-                  <ListItem button key={key} component={Link} to={listItem.listPath}>
+                  <ListItem button key={key} component={Link} to={{pathname: listItem.listPath, state: {userType: 'Customer'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
                       <ListItemText className={classes.listItem} primary={listItem.listText} />
                   </ListItem>
@@ -110,7 +109,7 @@ const ApplicationCustomerNavbar = (props) => {
                 anchor='left'>
                 {sideList('left')}
             </MobileeRightMenuSlider>
-            <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt='' onClick={() => {history.push('/');}}/>
+            <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt='' />
           </Toolbar>
         </AppBar>
       </Box>

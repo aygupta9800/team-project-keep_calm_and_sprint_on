@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import { ColorButton4 } from '../constants/index'
+import { userSignup } from '../state/action-creators/loginActions.js';
+
 import {
   Grid,
   TextField,
@@ -34,7 +35,6 @@ const Signup = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -52,11 +52,11 @@ const Signup = () => {
 
   const onLogIn = () => {
     if (userType === 'employee') {
-      history.push('/EmployeeDashboard');
-      // dispatch(restaurantLogin({ userId, password }, history));
+     // history.push({pathname: '/Airline', state: {userType: 'Employee'} });
+      dispatch(userSignup({ email , password, userName, userType }, history));
     } else {
-      history.push('CustomerDashboard');
-      // dispatch(customerLogin({ userId, password }, history));
+     // history.push({pathname: '/Airline', state: {userType: 'Customer'} });
+      dispatch(userSignup({ email, password, userName, userType }, history));
     }
   };
 

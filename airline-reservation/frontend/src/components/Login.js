@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import { ColorButton4 } from '../constants/index'
+import { userLogin } from '../state/action-creators/loginActions.js';
+//import { employeeLogin, customerLogin } from '../state/action-creators/loginActions.js';
 import {
   Grid,
   TextField,
@@ -14,6 +15,8 @@ import {
   FormControl,
 } from '@material-ui/core';
 import '../components/styles.css';
+
+
 
 // CSS styles
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +36,6 @@ const Login = () => {
   const [userType, setUserType] = useState('employee');
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -46,13 +48,7 @@ const Login = () => {
   };
 
   const onLogIn = () => {
-    if (userType === 'employee') {
-      history.push('/EmployeeDashboard');
-      // dispatch(restaurantLogin({ userId, password }, history));
-    } else {
-      history.push('CustomerDashboard');
-      // dispatch(customerLogin({ userId, password }, history));
-    }
+      dispatch(userLogin({ userId, password, userType }, history));
   };
 
   return (  

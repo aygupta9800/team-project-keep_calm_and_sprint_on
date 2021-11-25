@@ -8,7 +8,7 @@
     "test": "mocha",
     "dev": "nodemon --exec babel-node index.js",
     "build": "babel src --out-dir build",
-    "start": "node index.js"
+    "start": "npx nodemon"
   },
   "author": "",
   "license": "ISC",
