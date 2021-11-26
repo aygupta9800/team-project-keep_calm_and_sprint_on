@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import DehazeIcon from '@material-ui/icons/Dehaze';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -60,6 +61,11 @@ const menuItems = [
         listPath: '/ViewFlights'
     },
     {
+        listIcon: <ConfirmationNumberIcon style={{color: 'orange'}} />,
+        listText: 'View Bookings',
+        listPath: '/Bookings'
+    },
+    {
         listIcon: <LogoutIcon style={{color: 'orange'}} />,
         listText: 'Logout',
         listPath: '/'
@@ -87,7 +93,7 @@ const ApplicationCustomerNavbar = (props) => {
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
-                  <ListItem button key={key} component={Link} to={{pathname: listItem.listPath, state: {userType: 'customer'}}}>
+                  <ListItem button key={key} component={Link} to={{pathname: listItem.listPath, state: {userType: 'user'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
                       <ListItemText className={classes.listItem} primary={listItem.listText} />
                   </ListItem>

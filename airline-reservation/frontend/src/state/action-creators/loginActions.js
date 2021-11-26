@@ -25,7 +25,7 @@ export const userLogin = (userDetails, history) => async (dispatch) => {
       if(userDetails.userType==='employee'){
         history.push({pathname: '/Airline', state: {userType: 'employee'} });
       }else{
-        history.push({pathname: '/Airline', state: {userType: 'customer'} });
+        history.push({pathname: '/Airline', state: {userType: 'user'} });
       }
       return true;
     })
@@ -47,7 +47,7 @@ export const userSignup = (userDetails, history) => async (dispatch) => {
         if(userDetails.userType==='employee'){
           history.push({pathname: '/Airline', state: {userType: 'employee'} });
         }else{
-          history.push({pathname: '/Airline', state: {userType: 'customer'} });
+          history.push({pathname: '/Airline', state: {userType: 'user'} });
         }
       return true;
     })
