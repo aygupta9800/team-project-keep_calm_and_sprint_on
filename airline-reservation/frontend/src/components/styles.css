@@ -12,8 +12,23 @@
     -webkit-text-fill-color: transparent; */
 }
 
+.employeeProfile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    width: calc(100vw-20px);
+    overflow: scroll;
+    margin-top: 100px; 
+}
+
 .loginAnchor {
     color: blue;
     text-decoration: none;
     padding: 20px;
+  }
+
+  .MuiFormControl-fullWidth {
+padding: 0 10px;
   }
