@@ -1,19 +1,28 @@
 import {
-  // import action types here
+  USER_SIGNUP,
+  USER_LOGIN,
+LOGIN_SUCCESS
 } from '../action-creators/types';
 
-const initialState = {
+const initialState = {  
   // define initial state here
-  flightDetails: []
+  flightDetails: [],
+  userDetails: {}
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    // case RESTAURANT_LOGIN_SUCCESS:
-    //   return {
-    //     ...state,
-    //     user: action.payload,
-    //   };
+    case USER_SIGNUP:
+      return {
+        ...state,
+        userDetails: action.payload
+      };
+      case USER_LOGIN:{
+        return{
+          ...state,
+          userDetails: action.payload
+        }
+      }
     default:
       return state;
   }

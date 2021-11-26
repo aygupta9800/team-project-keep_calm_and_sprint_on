@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import { ColorButton4 } from '../constants/index'
+import { userLogin } from '../state/action-creators/loginActions.js';
+//import { employeeLogin, customerLogin } from '../state/action-creators/loginActions.js';
 import {
   Grid,
   TextField,
@@ -12,6 +15,8 @@ import {
   FormControl,
 } from '@material-ui/core';
 import '../components/styles.css';
+
+
 
 // CSS styles
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +37,7 @@ const Login = () => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleOnChangeUserId = (event) => {
     setUserId(event.target.value);
@@ -42,23 +48,17 @@ const Login = () => {
   };
 
   const onLogIn = () => {
-    if (userType === 'employee') {
-      history.push({pathname: '/Airline', state: {userType: 'employee'} });
-      // dispatch(restaurantLogin({ userId, password }, history));
-    } else {
-      history.push({pathname: '/Airline', state: {userType: 'customer'} });
-      // dispatch(customerLogin({ userId, password }, history));
-    }
+      dispatch(userLogin({ userId, password, userType }, history));
   };
 
-  return (
+  return (  
     <div>
       <LandingNavbar  />
         <div className="landingpage">
           <Grid className={classes.wrapper}>
             <FormControl component="fieldset">
               <RadioGroup row aria-label="user" name="row-radio-buttons-group" value={userType} onChange={(e) => { setUserType(e.target.value); }}>
-                <FormControlLabel value="customer" control={<Radio />} label="Customer" />
+                <FormControlLabel value="user" control={<Radio />} label="Customer" />
                 <FormControlLabel value="employee" control={<Radio />} label="Employee" />
               </RadioGroup>
             </FormControl>
