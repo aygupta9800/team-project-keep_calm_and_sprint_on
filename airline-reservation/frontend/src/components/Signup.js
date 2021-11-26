@@ -74,7 +74,7 @@ const Signup = () => {
             <TextField
               label='User Name'
               variant="outlined"
-              placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
+              placeholder={'User Name'}
               fullWidth
               required
               value={userName}

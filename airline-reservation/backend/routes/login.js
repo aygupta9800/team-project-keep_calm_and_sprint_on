@@ -17,8 +17,9 @@ const router = express.Router();
 router.post('/user', async (req, res) => {
     try {
         const { identifier, password, userType} = req.body;
+        console.log(req.body);
         let results = null;
-        if (userType === 'User') {
+        if (userType === 'user') {
             results =  await Users.findOne({mileageNumber: identifier});
         }
         if (userType === 'employee') {
