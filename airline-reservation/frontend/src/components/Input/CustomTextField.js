@@ -8,11 +8,11 @@ export default function CustomTextField(props) {
     return (
       <div style={{margin: '10px 5px', background: "white", width: '100%'}}>
       <TextField
-       // label="First name"
         variant="outlined"
         placeholder={props.placeholder}
         fullWidth
         required
+        inputRef={props.inputRef}
       />
       </div>
     );

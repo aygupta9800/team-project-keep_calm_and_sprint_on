@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     Grid
   } from '@material-ui/core';
@@ -6,6 +8,8 @@ import {
   import { makeStyles } from '@material-ui/core/styles';
   import { ColorButton4 } from '../../constants/index';
 import ApplicationEmployeeNavbar from '../ApplicationEmployeeNavbar/ApplicationEmployeeNavbar.js';
+import { updateProfile } from '../../state/action-creators/profileAction';
+
 import '../styles.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,61 +24,71 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const EmployeeProfile = () => {
+
+//can send in props all the data and then use it here
+// and initialize using props. 
+
+// or use redux using use selector
+
+export default function EmployeeProfile(){
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const fullNameRef = useRef();
+    const dobRef = useRef();
+    const emailRef = useRef();
+    const phoneRef = useRef();
+    const addressline1Ref = useRef();
+    const  cityRef= useRef();
+    const stateRef = useRef();
+    const countryRef = useRef();
+    //const zipcodeRef = useRef();
+
+
+    function handleUpdateProfile(){
+      const userProfile = {
+        userName: fullNameRef.current.value,
+        dob: dobRef.current.value,
+        email: emailRef.current.value,
+        phoneNumber: phoneRef.current.value,
+        address: {
+          addressline1: addressline1Ref.current.value,
+          city: cityRef.current.value,
+          state: stateRef.current.value,
+          country: countryRef.current.value,
+          //zipcode: zipcodeRef.current.value,
+        }
+      }
+      dispatch(updateProfile(userProfile));
+    }
     return (
         <div>
+          
             <ApplicationEmployeeNavbar  />
             <div className="employeeProfile">
+            
           <Grid className={classes.wrapper}>
+            <div>
+          <h3> Passanger Information (Adult) </h3>
+          <p>Enter the required information for each traveller<br/> and be sure it matches exactly to 
+            the government<br/> issued ID presented at the airport. </p>
+          </div>
           <div style={{ display: "flex", justifyContent: 'space-between' }}>
             <CustomTextField
               label="firstName"
               variant="outlined"
               placeholder = "Full Name"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
               fullWidth
               required
-            />
-
-            <CustomTextField
-              label="middleName"
-              variant="outlined"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
-              placeholder = "Middle Name"
-              fullWidth
-              required
-              
-            />
-            <CustomTextField
-              label="lastName"
-              variant="outlined"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
-              placeholder = "Last Name"
-              fullWidth
-              required
-              
-            />
-            </div>
-
-            <div style={{ display: "flex", justifyContent: 'space-between', width: '66%' }}>
-            <CustomTextField
-              label="suffix"
-              variant="outlined"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
-              placeholder = "Suffix"
-              fullWidth
-              required
-            />
-
+              inputRef={fullNameRef}
+            />        
             <CustomTextField
               label="dateOfBirth"
               variant="outlined"
               placeholder = "Date of birth"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
               fullWidth
               required
-              
+              inputRef={dobRef}
             />
             
             </div>
@@ -84,73 +98,70 @@ const EmployeeProfile = () => {
               label="email"
               variant="outlined"
               placeholder="Email"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
               fullWidth
               required
-              
+              inputRef={emailRef}
             />
 
             <CustomTextField
               label="phoneNumber"
               variant="outlined"
               placeholder ="Phone Number"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
               fullWidth
               required
-              
+              inputRef={phoneRef}
             />
-            
             </div>
            
-<h4> Emergency contact Information </h4>
+<h4> Address Information </h4>
 
 <div style={{ display: "flex", justifyContent: 'space-between' }}>
             <CustomTextField
-              label="firstName"
+              label="addressline1"
               variant="outlined"
-              placeholder = "First Name"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
+              placeholder = "Address"
               fullWidth
               required
-              
+              inputRef={addressline1Ref}
             />
 
-<CustomTextField
-              label="lastName"
+            <CustomTextField
+              label="city"
               variant="outlined"
-              placeholder ="Last Name"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
+              placeholder ="City"
               fullWidth
               required
+              inputRef={cityRef}
             />            
             </div>
 
             <div style={{ display: "flex", justifyContent: 'space-between' }}>
             <CustomTextField
-              label="email"
-              placeholder = "Email"
+              label="state"
+              placeholder = "State"
               variant="outlined"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
               fullWidth
               required
-              
+              inputRef={stateRef}
             />
-
-<CustomTextField
-              label="phoneNumber"
+            <CustomTextField
+              label="country"
               variant="outlined"
-              placeholder = "Phone Number"
-              //placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
+              placeholder = "Country"
               fullWidth
               required
-              
+              inputRef={countryRef}
             />
-            
+            </div>
+            <div>
+            <h3> Bag Information </h3>
+            <p>Each passanger is allowed one free carry-on bag and one personal item. <br/>First checked bag for each customer is also free. <br/>Second bag checked free is waived for loyalty program members.</p>
+            <br/>
             </div>
             <ColorButton4
               variant='contained'
-             // onClick={(e) => { onLogIn(e); }}
               style={{ height: '50px', alignSelf: 'center', width: '100%', marginBottom: '10px'}}
+              onClick={handleUpdateProfile}
             >
               Update
             </ColorButton4>
@@ -159,5 +170,3 @@ const EmployeeProfile = () => {
         </div>
     );
 }
-
-export default EmployeeProfile;
