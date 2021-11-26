@@ -4,12 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
     Grid
   } from '@material-ui/core';
-  import CustomTextField from '../Input/CustomTextField';
-  import { makeStyles } from '@material-ui/core/styles';
-  import { ColorButton4 } from '../../constants/index';
+import CustomTextField from '../Input/CustomTextField';
+import { makeStyles } from '@material-ui/core/styles';
+import { ColorButton4 } from '../../constants/index';
 import ApplicationEmployeeNavbar from '../ApplicationEmployeeNavbar/ApplicationEmployeeNavbar.js';
 import { updateProfile } from '../../state/action-creators/profileAction';
-
 import '../styles.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -63,10 +62,8 @@ export default function EmployeeProfile(){
     }
     return (
         <div>
-          
-            <ApplicationEmployeeNavbar  />
-            <div className="employeeProfile">
-            
+          <ApplicationEmployeeNavbar  />
+          <div className="employeeProfile">
           <Grid className={classes.wrapper}>
             <div>
           <h3> Passanger Information (Adult) </h3>
@@ -90,9 +87,7 @@ export default function EmployeeProfile(){
               required
               inputRef={dobRef}
             />
-            
             </div>
-
             <div style={{ display: "flex", justifyContent: 'space-between' }}>
             <CustomTextField
               label="email"
@@ -112,10 +107,8 @@ export default function EmployeeProfile(){
               inputRef={phoneRef}
             />
             </div>
-           
-<h4> Address Information </h4>
-
-<div style={{ display: "flex", justifyContent: 'space-between' }}>
+            <h4> Address Information </h4>
+            <div style={{ display: "flex", justifyContent: 'space-between' }}>
             <CustomTextField
               label="addressline1"
               variant="outlined"
