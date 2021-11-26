@@ -58,8 +58,8 @@ const Login = () => {
           <Grid className={classes.wrapper}>
             <FormControl component="fieldset">
               <RadioGroup row aria-label="user" name="row-radio-buttons-group" value={userType} onChange={(e) => { setUserType(e.target.value); }}>
-                <FormControlLabel value="Customer" control={<Radio />} label="Customer" />
-                <FormControlLabel value="Employee" control={<Radio />} label="Employee" />
+                <FormControlLabel value="customer" control={<Radio />} label="Customer" />
+                <FormControlLabel value="employee" control={<Radio />} label="Employee" />
               </RadioGroup>
             </FormControl>
             <TextField
