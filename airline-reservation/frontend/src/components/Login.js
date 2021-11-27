@@ -48,7 +48,7 @@ const Login = () => {
   };
 
   const onLogIn = () => {
-      dispatch(userLogin({ identifier : userId, password, userType }, history));
+      dispatch(userLogin({ identifier: userId, password, userType }, history));
   };
 
   return (  

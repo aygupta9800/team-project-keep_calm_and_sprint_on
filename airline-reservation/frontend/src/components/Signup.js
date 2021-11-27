@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import { ColorButton4 } from '../constants/index'
 import { userSignup } from '../state/action-creators/loginActions.js';
@@ -74,7 +74,7 @@ const Signup = () => {
             <TextField
               label='User Name'
               variant="outlined"
-              placeholder={userType === 'employee' ? 'Employee Id' : 'Mileage Number'}
+              placeholder={'User Name'}
               fullWidth
               required
               value={userName}
