@@ -8,7 +8,7 @@ import { ColorButton4 } from "../../constants/index";
 import ApplicationEmployeeNavbar from "../ApplicationEmployeeNavbar/ApplicationEmployeeNavbar.js";
 import { getUserDetails, updateProfile } from "../../state/action-creators/profileAction";
 import "../styles.css";
-
+import PopUp from "../Popup/Popup";
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     background: "white",
@@ -31,21 +31,22 @@ export default function EmployeeProfile() {
   const history = useHistory();
 
   const userProfileState = useSelector((state) => state.profile.userProfile);
-  console.log("userProfile ", userProfileState.userName);
   
 
 
-  //const [userType, setUserType] = useState(userProfileState.userType);
+  //const [userType, setUserType] = useState(userProfileState.userType);\
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('Profile Updated Successfully!');
   const [userName, setUserName] = useState(userProfileState.userName);
   const [dob, setDOB] = useState(userProfileState.dob);
   const [email, setEmail] = useState(userProfileState.email);
   const [phoneNumber, setPhoneNumber] = useState(userProfileState.phoneNumber);
   const [mileageNumber, setMileageNumber] = useState(userProfileState.mileageNumber);
   const [mileagePoints, setMileagePoints] = useState(userProfileState.mileagePoints);
-  const [addressline1, setAddressLine] = useState(userProfileState.address.addressline1);
-  const [city, setCity] = useState(userProfileState.address.city);
-  const [state, setState] = useState(userProfileState.address.state);
-  const [country, setCountry] = useState(userProfileState.address.country);
+  const [addressline1, setAddressLine] = useState(userProfileState.address?.addressline1);
+  const [city, setCity] = useState(userProfileState.address?.city);
+  const [state, setState] = useState(userProfileState.address?.state);
+  const [country, setCountry] = useState(userProfileState.address?.country);
   
   React.useEffect(() => {
     setUserName(userProfileState.userName);
@@ -54,10 +55,10 @@ export default function EmployeeProfile() {
     setPhoneNumber(userProfileState.phoneNumber);
     setMileageNumber(userProfileState.mileageNumber);
     setMileagePoints(userProfileState.mileagePoints);
-    setAddressLine(userProfileState.address.setAddressLine);
-    setCity(userProfileState.address.city);
-    setState(userProfileState.address.state);
-    setCountry(userProfileState.address.Country);
+    setAddressLine(userProfileState.address?.addressline1);
+    setCity(userProfileState.address?.city);
+    setState(userProfileState.address?.state);
+    setCountry(userProfileState.address?.country);
   }, [userProfileState])
   const dispatch = useDispatch();
 
@@ -112,6 +113,10 @@ export default function EmployeeProfile() {
       },
     };
     dispatch(updateProfile(userProfile));
+       setOpen(true);
+       setTimeout(()=>{
+           setOpen(false);
+       }, 2000)
   };
 
   return (
@@ -183,8 +188,7 @@ export default function EmployeeProfile() {
               placeholder="Mileage Number"
               fullWidth
               required
-              editable={false}
-              selectTextOnFocus={false}
+              disabled={true}
               value={mileageNumber}
               onChange={(e) => {
                 handleOnChangeMileageNumber(e);
@@ -197,8 +201,7 @@ export default function EmployeeProfile() {
               placeholder="Mileage Points"
               fullWidth
               required
-              editable={false}
-              selectTextOnFocus={false}
+              disabled={true}
               value={mileagePoints}
               onChange={(e) => {
                 handleOnChangeMileagePoints(e);
@@ -280,6 +283,7 @@ export default function EmployeeProfile() {
           </ColorButton4>
         </Grid>
       </div>
+      <PopUp open={open} message={message}/>
     </div>
   );
 }

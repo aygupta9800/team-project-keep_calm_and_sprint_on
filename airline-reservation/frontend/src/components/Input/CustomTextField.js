@@ -14,6 +14,7 @@ export default function CustomTextField(props) {
         required
         value={props.value}
         onChange={props.onChange}
+        disabled={props.disabled}
       />
       </div>
     );
