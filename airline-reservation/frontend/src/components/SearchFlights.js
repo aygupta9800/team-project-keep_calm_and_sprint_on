@@ -53,7 +53,7 @@ const SearchFlights = () => {
   console.log(value);
   return (
     <div>
-      {userDetails ?
+      {userDetails.data ?
       <>
         <div className={classes.fields}>
           <Dropdown valueString={from} setValueString={setFromValue} listItems={airports} label='From Where?' style={{width: '20%'}} />
