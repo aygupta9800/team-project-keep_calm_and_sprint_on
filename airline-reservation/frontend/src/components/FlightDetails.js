@@ -32,18 +32,56 @@ function FlightDetails(props) {
     useEffect(() => {
         const rows = [];
         if (flightDetails.data) {
-            for (let item of flightDetails.data) {
-                rows.push({id: item._id,
-                    duration: item.duration,
-                    timings: `${item.startTime} - ${item.endTime}`,
-                    origin: item.source,
-                    destination: item.destination,
-                    price: item.basePrice
-                });
+
+            if (searchDetails.source[0] && searchDetails.destination[0]) {
+                for (let item of flightDetails.data) {
+                    if (searchDetails.source[0] === item.source && searchDetails.destination[0] === item.destination) {
+                        rows.push({id: item._id,
+                            duration: item.duration,
+                            timings: `${item.startTime} - ${item.endTime}`,
+                            origin: item.source,
+                            destination: item.destination,
+                            price: item.basePrice
+                        });
+                    }
+                }
+                setRows(rows);
+                return;
+            }
+
+            if (searchDetails.source[0]) {
+                for (let item of flightDetails.data) {
+                    if(searchDetails.source[0] === item.source) {
+                        rows.push({id: item._id,
+                            duration: item.duration,
+                            timings: `${item.startTime} - ${item.endTime}`,
+                            origin: item.source,
+                            destination: item.destination,
+                            price: item.basePrice
+                        });
+                    }
+                }
+                setRows(rows);
+                return;
+            }
+
+            if (searchDetails.destination[0]) {
+                for (let item of flightDetails.data) {
+                    if(searchDetails.destination[0] === item.destination) {
+                        rows.push({id: item._id,
+                            duration: item.duration,
+                            timings: `${item.startTime} - ${item.endTime}`,
+                            origin: item.source,
+                            destination: item.destination,
+                            price: item.basePrice
+                        });
+                    }
+                }
+                setRows(rows);
+                return;
             }
         }
-        setRows(rows);
-    }, [flightDetails]);
+    }, [flightDetails, searchDetails ]);
 
     return (
         <div>

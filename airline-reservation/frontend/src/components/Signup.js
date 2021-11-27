@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import { ColorButton4 } from '../constants/index'
+import { userSignup } from '../state/action-creators/loginActions.js';
+
 import {
   Grid,
   TextField,
@@ -28,11 +31,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
   const classes = useStyles();
-  const [userType, setUserType] = useState('Employee');
+  const [userType, setUserType] = useState('employee');
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleOnChangeUserName = (event) => {
     setUserName(event.target.value);
@@ -47,12 +51,12 @@ const Signup = () => {
   };
 
   const onLogIn = () => {
-    if (userType === 'Employee') {
-      history.push({pathname: '/Airline', state: {userType: 'Employee'} });
-      // dispatch(restaurantLogin({ userId, password }, history));
+    if (userType === 'employee') {
+     // history.push({pathname: '/Airline', state: {userType: 'Employee'} });
+      dispatch(userSignup({ email , password, userName, userType }, history));
     } else {
-      history.push({pathname: '/Airline', state: {userType: 'Customer'} });
-      // dispatch(customerLogin({ userId, password }, history));
+     // history.push({pathname: '/Airline', state: {userType: 'Customer'} });
+      dispatch(userSignup({ email, password, userName, userType }, history));
     }
   };
 
@@ -63,14 +67,14 @@ const Signup = () => {
           <Grid className={classes.wrapper}>
             <FormControl component="fieldset">
               <RadioGroup row aria-label="user" name="row-radio-buttons-group" value={userType} onChange={(e) => { setUserType(e.target.value); }}>
-                <FormControlLabel value="Customer" control={<Radio />} label="Customer" />
-                <FormControlLabel value="Employee" control={<Radio />} label="Employee" />
+                <FormControlLabel value="user" control={<Radio />} label="Customer" />
+                <FormControlLabel value="employee" control={<Radio />} label="Employee" />
               </RadioGroup>
             </FormControl>
             <TextField
               label='User Name'
               variant="outlined"
-              placeholder={userType === 'Employee' ? 'Employee Id' : 'Mileage Number'}
+              placeholder={'User Name'}
               fullWidth
               required
               value={userName}

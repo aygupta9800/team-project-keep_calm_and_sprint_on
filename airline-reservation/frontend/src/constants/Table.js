@@ -12,13 +12,19 @@ import { ColorButton3 } from '../constants/index';
 import MakeBookingDialog from '../components/MakeBookingDialog';
 
 export default function StickyHeadTable(props) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [open, setOpen] = useState(false);
+  const [flightDetails, setFlightDetails] = useState({});
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleOpen = (row) => {
+    setFlightDetails(row);
+    setOpen(true);
+  }
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -63,19 +69,19 @@ export default function StickyHeadTable(props) {
                     })}
                     {props.isEdit &&
                     <TableCell key={`edit-${row.id}`}>
-                      <ColorButton3 onClick={() => {setOpen(true)}}>Edit</ColorButton3>
+                      <ColorButton3 onClick={() => {handleOpen(row, true)}}>Book</ColorButton3>
                     </TableCell>}
-                    <MakeBookingDialog
-                      open={open}
-                      details={row}
-                      handleClose={handleClose}
-                    />
                   </TableRow>
                 );
               })}
           </TableBody>
         </Table>
       </TableContainer>
+      <MakeBookingDialog
+        open={open}
+        flightDetails={flightDetails}
+        handleClose={handleClose}
+      />
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
