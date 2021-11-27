@@ -38,6 +38,8 @@ export default function EmployeeProfile(){
     const emailRef = useRef();
     const phoneRef = useRef();
     const addressline1Ref = useRef();
+    const mileageNumberRef = useRef();
+    const mileagePointsRef = useRef();
     const  cityRef= useRef();
     const stateRef = useRef();
     const countryRef = useRef();
@@ -50,6 +52,8 @@ export default function EmployeeProfile(){
         dob: dobRef.current.value,
         email: emailRef.current.value,
         phoneNumber: phoneRef.current.value,
+        mileageNumber: mileageNumberRef.current.value,
+        mileagePoints: mileagePointsRef.current.value,
         address: {
           addressline1: addressline1Ref.current.value,
           city: cityRef.current.value,
@@ -105,6 +109,31 @@ export default function EmployeeProfile(){
               fullWidth
               required
               inputRef={phoneRef}
+            />
+            </div>
+            <div style={{ display: "flex", justifyContent: 'space-between' }}>
+            <CustomTextField
+              label="mileageNumber"
+              variant="outlined"
+              placeholder="Mileage Number"
+              fullWidth
+              required
+              editable={false}
+              selectTextOnFocus={false} 
+              inputRef={mileageNumberRef}
+              
+            />
+
+            <CustomTextField
+              label="milagePoints"
+              variant="outlined"
+              placeholder ="Mileage Points"
+              fullWidth
+              required
+              editable={false}
+              selectTextOnFocus={false} 
+              inputRef={mileagePointsRef}
+              
             />
             </div>
             <h4> Address Information </h4>

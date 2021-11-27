@@ -36,7 +36,6 @@ export const userLogin = (userDetails, history) => async (dispatch) => {
 };
 
 export const userSignup = (userDetails, history) => async (dispatch) => {
-  
   axios.post(`${server}/signup/user`, { ...userDetails })
     .then((response) => {
       //const user = response.data;
