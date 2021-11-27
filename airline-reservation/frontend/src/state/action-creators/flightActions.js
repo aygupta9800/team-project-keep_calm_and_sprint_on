@@ -4,7 +4,8 @@ import server from '../../Config';
 import {
   LOGOUT_SUCCESS,
   STORE_SEARCH_PARAMS,
-  GET_FLIGHT_DETAILS
+  GET_FLIGHT_DETAILS,
+  MAKE_BOOKING
 } from './types';
 
 export const storeSearchParams = (searchDetails, history) => async (dispatch) => {
@@ -19,6 +20,21 @@ export const getFlightDetails = () => async (dispatch) => {
     .then((response) => {
       dispatch({
         type: GET_FLIGHT_DETAILS,
+        payload: response.data,
+      });
+      return true;
+    })
+    .catch((err) => {
+      alert(err);
+      return false;
+    });
+};
+
+export const makeBooking = (bookingDetails) => async (dispatch) => {
+  axios.post(`${server}/booking/add`, bookingDetails)
+    .then((response) => {
+      dispatch({
+        type: MAKE_BOOKING,
         payload: response.data,
       });
       return true;

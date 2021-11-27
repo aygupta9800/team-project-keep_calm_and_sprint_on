@@ -1,13 +1,14 @@
 /* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { Grid } from '@material-ui/core';
 import { ColorButton4 } from '../constants/index';
+import { makeBooking } from '../state/action-creators/flightActions';
 import ApplicationCustomerNavbar from './ApplicationCustomerNavbar/ApplicationCustomerNavbar';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +55,20 @@ const Payment = (props) => {
   const [cvv, setCvv] = useState('')
 
   const bookingDetails = location.state;
-//   const userDetails = useSelector((state) => state.login.user);
+
+  const confirmBooking = () => {
+      const bookingData = {
+        userId: bookingDetails.userId,
+        flightId: bookingDetails.flightId,
+        totalSeatNeeded: bookingDetails.totalSeats,
+        mileagePointsToUse: bookingDetails.redeemPoints,
+        totalPricePaid: bookingDetails.totalSeats * (bookingDetails.price + (bookingDetails.cabinType === 'Economy' ? 0 : bookingDetails.cabinType === 'Business' ? 100 : 50)) - bookingDetails.redeemPoints,
+        flightClass: bookingDetails.cabinType,
+        identityNumber: bookingDetails.identityNumber,
+        seats: bookingDetails.seat
+      }
+      dispatch(makeBooking(bookingData));
+  }
 
   return (
     <div>
@@ -83,44 +97,44 @@ const Payment = (props) => {
             <label style={{ alignSelf: 'center' }}>Enter Payment Details</label>
             <br />
             <div>
-                <div style={{ display: "flex", justifyContent: 'space-between', padding: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '20px' }}>
                     <TextField
-                        label="First Name"
-                        variant="outlined"
+                        label='First Name'
+                        variant='outlined'
                         style={{marginRight: '20px'}}
-                        placeholder = "Enter First Name"
+                        placeholder = 'Enter First Name'
                         fullWidth
                         required
                         onChange={(e) => {setFname(e.target.value)}}
                         value={fname}
                     />        
                     <TextField
-                        label="Last Name"
-                        variant="outlined"
+                        label='Last Name'
+                        variant='outlined'
                         style={{marginRight: '20px'}}
-                        placeholder = "Enter Last Name"
+                        placeholder = 'Enter Last Name'
                         fullWidth
                         required
                         onChange={(e) => {setLname(e.target.value)}}
                         value={lname}
                     />
                 </div>
-                <div style={{ display: "flex", justifyContent: 'space-between', padding: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '20px' }}>
                     <TextField
-                        label="Card Number"
-                        variant="outlined"
+                        label='Card Number'
+                        variant='outlined'
                         style={{marginRight: '20px'}}
-                        placeholder = "Enter Card Number"
+                        placeholder = 'Enter Card Number'
                         fullWidth
                         required
                         onChange={(e) => {setCardNumber(e.target.value)}}
                         value={cardnumber}
                     />        
                     <TextField
-                        label="CVV"
-                        variant="outlined"
+                        label='CVV'
+                        variant='outlined'
                         style={{marginRight: '20px'}}
-                        placeholder = "CVV"
+                        placeholder = 'CVV'
                         fullWidth
                         required
                         onChange={(e) => {setCvv(e.target.value)}}
@@ -150,6 +164,10 @@ const Payment = (props) => {
                 <p>{bookingDetails.price}$</p>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <p>Cabin Type:</p>
+                <p>{bookingDetails.cabinType}</p>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <p>Cabin Price:</p>
                 <p>{bookingDetails.cabinType === 'Economy' ? '0$' : bookingDetails.cabinType === 'Business' ? '100$' : '50$'}</p>
               </div>
@@ -165,11 +183,11 @@ const Payment = (props) => {
               </div>
             </div>
             <ColorButton4
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               disabled={!fname || !lname || !cvv || !cardnumber}
               onClick={(e) => {
-                console.log(e);
+                confirmBooking();
               }}
               className={classes.button}
             >

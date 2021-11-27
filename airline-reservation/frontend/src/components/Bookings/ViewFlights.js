@@ -9,6 +9,7 @@ import '../styles.css';
 const ViewFlights = () => {
     const history = useHistory();
     const searchDetails = useSelector((state) => state.flight.searchParams);
+    const userDetails = useSelector((state) => state.login.userDetails.data);
     const flightDetails = useSelector((state) => state.flight.flightDetails);
     const [rows, setRows] = useState([]);
 
@@ -42,7 +43,9 @@ const ViewFlights = () => {
                             origin: item.source,
                             destination: item.destination,
                             price: item.basePrice,
-                            seats: item.seats
+                            seats: item.seats,
+                            userId: userDetails._id,
+                            flightId: item._id
                         });
                     }
                 }
@@ -59,7 +62,9 @@ const ViewFlights = () => {
                             origin: item.source,
                             destination: item.destination,
                             price: item.basePrice,
-                            seats: item.seats
+                            seats: item.seats,
+                            userId: userDetails._id,
+                            flightId: item._id
                         });
                     }
                 }
@@ -76,7 +81,9 @@ const ViewFlights = () => {
                             origin: item.source,
                             destination: item.destination,
                             price: item.basePrice,
-                            seats: item.seats
+                            seats: item.seats,
+                            userId: userDetails._id,
+                            flightId: item._id
                         });
                     }
                 }

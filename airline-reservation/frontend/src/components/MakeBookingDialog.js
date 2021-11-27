@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
@@ -9,20 +10,74 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import FormGroup from '@mui/material/FormGroup';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Chip from '@material-ui/core/Chip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { ColorButton3 } from '../constants/index';
 
+// styles for the drop downs and chips
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      width: '100%',
+      backgroundColor: 'white'
+    },
+    chips: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    chip: {
+      margin: 2,
+      background: 'cadetblue',
+      color: 'white',
+      fontWeight: 'bold',
+      textShadow: '1px 1px black'
+    },
+    noLabel: {
+      marginTop: theme.spacing(3),
+    },
+    selectRoot: {
+      '&:focus':{
+         backgroundColor:'white'
+      }
+    }
+  }));
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+  
+  function getStyles(name, selectedSkills, theme) {
+    return {
+      fontWeight:
+        selectedSkills.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
+
 const MakeBookingDialog = (props) => {
   const history = useHistory();
+  const classes = useStyles();
+  const theme = useTheme();
   const userDetails = useSelector((state) => state.login.userDetails.data);
   const [price, setPrice] = useState(props.flightDetails.price);
   const [totalSeats, setTotalSeats] = useState(1);
   const [cabinType, setCabinType] = useState('Economy');
   const [redeemPoints, setRedeemPoints] = useState(0)
   const [identityNumber, setIdentityNumber] = useState('');
-  const [seat, setSeat] = useState('');
+  const [seat, setSeat] = useState([]);
   const [windowChecked, setWindowChecked] = useState(true);
   const [aisleChecked, setAisleChecked] = useState(false);
 
@@ -31,6 +86,7 @@ const MakeBookingDialog = (props) => {
 
   const handleWindowChange = (event) => {
     setWindowChecked(event.target.checked);
+    setSeat([]);
     if (event.target.checked) {
       setAisleChecked(false);
     } else {
@@ -41,6 +97,7 @@ const MakeBookingDialog = (props) => {
 
   const handleAisleChange = (event) => {
     setAisleChecked(event.target.checked);
+    setSeat([]);
     if (event.target.checked) {
       setWindowChecked(false);
     } else {
@@ -169,7 +226,7 @@ const MakeBookingDialog = (props) => {
             <FormControlLabel control={<Checkbox checked={aisleChecked} onChange={(e) => { handleAisleChange(e); }} />} label="Show Aisle Seats" />
         </div>
         <div style={{ display: "flex", justifyContent: 'space-between', padding: '20px'  }}>
-            {aisleChecked && <TextField
+            {/* {aisleChecked && <TextField
               label="Select Seats"
               variant="outlined"
               style={{marginRight: '20px'}}
@@ -183,8 +240,34 @@ const MakeBookingDialog = (props) => {
                 {aisleSeats.map((item, index) => {
                     return <MenuItem key={index} value={item}>{item}</MenuItem>
                 })}
-            </TextField>}
-            {windowChecked && <TextField
+            </TextField>} */}
+            {aisleChecked && <FormControl className={classes.formControl}>
+                <InputLabel id="demo-mutiple-chip-label" style={{paddingLeft: '5px'}}>Select Window Seats<span style={{color: 'red', alignSelf: 'baseline', marginLeft: '10px'}}>*</span></InputLabel>
+                    <Select
+                        classes={{ root: classes.selectRoot }}
+                        labelId="demo-mutiple-chip-label"
+                        id="demo-mutiple-chip"
+                        multiple
+                        value={seat}
+                        onChange={(e) => setSeat(e.target.value)}
+                        input={<Input id="select-multiple-chip" />}
+                        renderValue={(selected) => (
+                            <div className={classes.chips}>
+                            {selected.map((value) => (
+                                <Chip key={value} label={value} className={classes.chip} />
+                            ))}
+                            </div>
+                        )}
+                        MenuProps={MenuProps}
+                        >
+                        {aisleSeats.map((name) => (
+                            <MenuItem key={name} value={name} style={getStyles(name, seat, theme)}>
+                            {name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+            </FormControl>}
+            {/* {windowChecked && <TextField
               label="Select Seats"
               variant="outlined"
               style={{marginRight: '20px'}}
@@ -198,7 +281,33 @@ const MakeBookingDialog = (props) => {
                 {windowSeats.map((item, index) => {
                     return <MenuItem key={index} value={item}>{item}</MenuItem>
                 })}
-            </TextField>} 
+            </TextField>} */}
+            {windowChecked && <FormControl className={classes.formControl}>
+                <InputLabel id="demo-mutiple-chip-label" style={{paddingLeft: '5px'}}>Select Window Seats<span style={{color: 'red', alignSelf: 'baseline', marginLeft: '10px'}}>*</span></InputLabel>
+                    <Select
+                        classes={{ root: classes.selectRoot }}
+                        labelId="demo-mutiple-chip-label"
+                        id="demo-mutiple-chip"
+                        multiple
+                        value={seat}
+                        onChange={(e) => setSeat(e.target.value)}
+                        input={<Input id="select-multiple-chip" />}
+                        renderValue={(selected) => (
+                            <div className={classes.chips}>
+                            {selected.map((value) => (
+                                <Chip key={value} label={value} className={classes.chip} />
+                            ))}
+                            </div>
+                        )}
+                        MenuProps={MenuProps}
+                        >
+                        {windowSeats.map((name) => (
+                            <MenuItem key={name} value={name} style={getStyles(name, seat, theme)}>
+                            {name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+            </FormControl>}
             {userDetails.mileagePoints > 0 && <TextField
               label="Mileage points"
               variant="outlined"
