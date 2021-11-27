@@ -77,11 +77,11 @@ export default function StickyHeadTable(props) {
           </TableBody>
         </Table>
       </TableContainer>
-      <MakeBookingDialog
+      {props.isEdit && <MakeBookingDialog
         open={open}
         flightDetails={flightDetails}
         handleClose={handleClose}
-      />
+      />}
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"

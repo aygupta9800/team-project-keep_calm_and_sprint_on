@@ -226,21 +226,6 @@ const MakeBookingDialog = (props) => {
             <FormControlLabel control={<Checkbox checked={aisleChecked} onChange={(e) => { handleAisleChange(e); }} />} label="Show Aisle Seats" />
         </div>
         <div style={{ display: "flex", justifyContent: 'space-between', padding: '20px'  }}>
-            {/* {aisleChecked && <TextField
-              label="Select Seats"
-              variant="outlined"
-              style={{marginRight: '20px'}}
-              placeholder = "Select Seats"
-              fullWidth
-              required
-              value={seat}
-              onChange={(e) => setSeat(e.target.value)}
-              select
-            >
-                {aisleSeats.map((item, index) => {
-                    return <MenuItem key={index} value={item}>{item}</MenuItem>
-                })}
-            </TextField>} */}
             {aisleChecked && <FormControl className={classes.formControl}>
                 <InputLabel id="demo-mutiple-chip-label" style={{paddingLeft: '5px'}}>Select Window Seats<span style={{color: 'red', alignSelf: 'baseline', marginLeft: '10px'}}>*</span></InputLabel>
                     <Select
@@ -267,21 +252,6 @@ const MakeBookingDialog = (props) => {
                         ))}
                     </Select>
             </FormControl>}
-            {/* {windowChecked && <TextField
-              label="Select Seats"
-              variant="outlined"
-              style={{marginRight: '20px'}}
-              placeholder = "Select Seats"
-              fullWidth
-              required
-              value={seat}
-              onChange={(e) => setSeat(e.target.value)}
-              select
-            >
-                {windowSeats.map((item, index) => {
-                    return <MenuItem key={index} value={item}>{item}</MenuItem>
-                })}
-            </TextField>} */}
             {windowChecked && <FormControl className={classes.formControl}>
                 <InputLabel id="demo-mutiple-chip-label" style={{paddingLeft: '5px'}}>Select Window Seats<span style={{color: 'red', alignSelf: 'baseline', marginLeft: '10px'}}>*</span></InputLabel>
                     <Select
