@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -8,11 +8,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { ColorButton3 } from '../constants/index';
+import MakeBookingDialog from '../components/MakeBookingDialog';
 
 export default function StickyHeadTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [open, setOpen] = useState(false);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -23,7 +29,7 @@ export default function StickyHeadTable(props) {
   };
 
   return (
-    <Paper sx={{ width: '90%', overflow: 'hidden' }}>
+    <Paper sx={{ width: props.width || '90%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -55,6 +61,15 @@ export default function StickyHeadTable(props) {
                         </TableCell>
                       );
                     })}
+                    {props.isEdit &&
+                    <TableCell key={`edit-${row.id}`}>
+                      <ColorButton3 onClick={() => {setOpen(true)}}>Edit</ColorButton3>
+                    </TableCell>}
+                    <MakeBookingDialog
+                      open={open}
+                      details={row}
+                      handleClose={handleClose}
+                    />
                   </TableRow>
                 );
               })}
@@ -77,4 +92,6 @@ StickyHeadTable.propTypes = {
     // ...prop type definitions here
     columns: PropTypes.array,
     rows: PropTypes.array,
+    width: PropTypes.string,
+    isEdit: PropTypes.bool,
 };

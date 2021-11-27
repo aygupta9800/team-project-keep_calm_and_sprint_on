@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
 import loginReducer from './loginReducer';
-import signUpReducer from './signUpReducer';
 import flightReducer from './flightReducer';
 
 const reducers = combineReducers({
   login: loginReducer,
-  signIn: signUpReducer,
   flight: flightReducer
 });
 

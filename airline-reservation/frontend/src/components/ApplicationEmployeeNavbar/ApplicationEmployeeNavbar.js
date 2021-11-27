@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import MobileeRightMenuSlider from '@material-ui/core/Drawer';
 import {
@@ -20,6 +21,7 @@ import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import logo from '../../images/icon.svg';
+import { logout } from '../../state/action-creators/loginActions.js';
 import '../LandingNavbar/LandingNavbar.css';
 
 // CSS styles
@@ -69,6 +71,7 @@ const menuItems = [
 const ApplicationCustomerNavbar = (props) => {
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
       left: false
@@ -87,7 +90,8 @@ const ApplicationCustomerNavbar = (props) => {
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
-                  <ListItem button key={key} component={Link} to={{pathname: listItem.listPath, state: {userType: 'employee'}}}>
+                  <ListItem button key={key} component={Link} onClick={() => { if (listItem.listText === 'Logout') { dispatch(logout(history)); } }}
+                  to={{pathname: listItem.listPath, state: {userType: 'employee'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
                       <ListItemText className={classes.listItem} primary={listItem.listText} />
                   </ListItem>

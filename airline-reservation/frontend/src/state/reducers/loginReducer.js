@@ -1,7 +1,6 @@
 import {
   USER_SIGNUP,
   USER_LOGIN,
-LOGIN_SUCCESS
 } from '../action-creators/types';
 
 const initialState = {  
