@@ -61,7 +61,7 @@ router.post('/add', async (req, res) => {
 router.get('/user/:userId', async (req, res) => {
     try {
         const {userId } = req.params;
-        const booking = await Booking.find({userId})
+        const booking = await Booking.find({userId});
         return res.status(200).json({ data: booking });
     
     } catch(error) {

@@ -12,7 +12,9 @@ export default function CustomTextField(props) {
         placeholder={props.placeholder}
         fullWidth
         required
-        inputRef={props.inputRef}
+        value={props.value}
+        onChange={props.onChange}
+        disabled={props.disabled}
       />
       </div>
     );

@@ -2,11 +2,13 @@ import { combineReducers } from 'redux';
 import loginReducer from './loginReducer';
 import flightReducer from './flightReducer';
 import profileReducer from './profileReducer';
+import bookings from './bookingReducer';
 
 const reducers = combineReducers({
   login: loginReducer,
   flight: flightReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  bookings: bookings
 });
 
 const rootReducer = (state, action) => {

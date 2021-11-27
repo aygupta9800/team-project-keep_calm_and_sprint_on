@@ -23,6 +23,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import logo from '../../images/icon.svg';
 import { logout } from '../../state/action-creators/loginActions.js';
 import '../LandingNavbar/LandingNavbar.css';
+import { getUserDetails, updateProfile } from "../../state/action-creators/profileAction";
+
 
 // CSS styles
 const useStyles = makeStyles(theme=>({
@@ -90,7 +92,7 @@ const ApplicationCustomerNavbar = (props) => {
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
-                  <ListItem button key={key} component={Link} onClick={() => { if (listItem.listText === 'Logout') { dispatch(logout(history)); } }}
+                  <ListItem button key={key} component={Link} onClick={() => { if (listItem.listText === 'Logout') { dispatch(logout(history)); }  if(listItem.listText === 'Profile')  { dispatch(getUserDetails()); }}} 
                   to={{pathname: listItem.listPath, state: {userType: 'employee'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
                       <ListItemText className={classes.listItem} primary={listItem.listText} />
