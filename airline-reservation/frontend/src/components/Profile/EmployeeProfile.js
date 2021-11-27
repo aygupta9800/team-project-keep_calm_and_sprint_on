@@ -32,9 +32,7 @@ export default function EmployeeProfile() {
 
   const userProfileState = useSelector((state) => state.profile.userProfile);
   console.log("userProfile ", userProfileState.userName);
-  React.useEffect(() => {
-    //dispatch(getUserDetails());
-  }, [])
+  
 
 
   //const [userType, setUserType] = useState(userProfileState.userType);
@@ -44,12 +42,23 @@ export default function EmployeeProfile() {
   const [phoneNumber, setPhoneNumber] = useState(userProfileState.phoneNumber);
   const [mileageNumber, setMileageNumber] = useState(userProfileState.mileageNumber);
   const [mileagePoints, setMileagePoints] = useState(userProfileState.mileagePoints);
-  const [addressline1, setAddressLine] = useState(userProfileState.addressline1);
-  const [city, setCity] = useState(userProfileState.addressline1);
-  const [state, setState] = useState(userProfileState.addressline1);
-  const [country, setCountry] = useState(userProfileState.addressline1);
+  const [addressline1, setAddressLine] = useState(userProfileState.address.addressline1);
+  const [city, setCity] = useState(userProfileState.address.city);
+  const [state, setState] = useState(userProfileState.address.state);
+  const [country, setCountry] = useState(userProfileState.address.country);
   
-
+  React.useEffect(() => {
+    setUserName(userProfileState.userName);
+    setDOB(userProfileState.dob);
+    setEmail(userProfileState.email);
+    setPhoneNumber(userProfileState.phoneNumber);
+    setMileageNumber(userProfileState.mileageNumber);
+    setMileagePoints(userProfileState.mileagePoints);
+    setAddressLine(userProfileState.address.setAddressLine);
+    setCity(userProfileState.address.city);
+    setState(userProfileState.address.state);
+    setCountry(userProfileState.address.Country);
+  }, [userProfileState])
   const dispatch = useDispatch();
 
   const [rows, setRows] = useState([]);
