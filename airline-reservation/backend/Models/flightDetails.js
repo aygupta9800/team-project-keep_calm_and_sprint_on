@@ -13,6 +13,10 @@ const flightDetailSchema = new Schema({
     duration: String, // In minutes or hours
     startTime: String, 
     endTime: String,
+    seats: [{
+        seatNumber: String,
+        isBooked: Boolean,
+    }]
 },
 { 
     versionKey: false 
