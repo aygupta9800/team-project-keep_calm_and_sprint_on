@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import MobileeRightMenuSlider from '@material-ui/core/Drawer';
+import { getUserDetails, updateProfile } from "../../state/action-creators/profileAction";
 import {
     AppBar,
     Toolbar,
@@ -96,7 +97,7 @@ const ApplicationCustomerNavbar = (props) => {
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
-                  <ListItem button key={key} component={Link} onClick={() => { if (listItem.listText === 'Logout') { dispatch(logout(history)); } }}
+                  <ListItem button key={key} component={Link} onClick={() => { if (listItem.listText === 'Logout') { dispatch(logout(history)); } else  { dispatch(getUserDetails()); }}}
                     to={{pathname: listItem.listPath, state: {userType: 'user'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
                       <ListItemText className={classes.listItem} primary={listItem.listText} />

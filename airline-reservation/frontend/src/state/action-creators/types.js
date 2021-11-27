@@ -4,4 +4,5 @@ export const GET_FLIGHT_DETAILS = 'GET_FLIGHT_DETAILS';
 export const USER_LOGIN ='USER_LOGIN';
 export const USER_SIGNUP ='USER_SIGNUP';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+export const GET_USER_DETAILS = 'GET_USER_DETAILS'
 
