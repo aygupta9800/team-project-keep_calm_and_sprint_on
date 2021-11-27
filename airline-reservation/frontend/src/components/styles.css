@@ -6,10 +6,16 @@
     height: 100vh;
     width: 100vw;
     text-align: center;
-    /* background-color: #9599E2;
-    background-image: linear-gradient(62deg, #9599E2 0%, #222 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
+}
+
+.customLandingPage {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
 }
 
 .loginAnchor {

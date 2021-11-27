@@ -29,7 +29,8 @@ export const ColorButton3 = withStyles(() => ({
     backgroundColor: '#222',
     textTransform: 'none',
     '&:hover': {
-      opacity: 0.6,
+      backgroundColor: '#222',
+      opacity: 0.8,
     },
   },
 }))(Button);

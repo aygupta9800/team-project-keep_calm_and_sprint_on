@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import ApplicationEmployeeNavbar from './ApplicationEmployeeNavbar/ApplicationEmployeeNavbar.js';
@@ -9,13 +9,6 @@ const Airline = (props) => {
     const mileageNumber = useSelector((state) => state.login.userDetails.data.mileageNumber);
     const empId = useSelector((state) => state.login.userDetails.data.empId);
     const userType = props.location.state.userType;
-    // useEffect(() => {
-    //     if (mileageNumber) {
-    //         alert (`Please note your mileage number ${mileageNumber} for future logins`);
-    //     } else if(empId) {
-    //         alert (`Please note your Employee id ${empId} for future logins`);
-    //     }
-    // }, [mileageNumber, empId]);
     return (
         <div>
             {(userType === 'employee')
