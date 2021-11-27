@@ -10,6 +10,7 @@ import ViewBookings from './components/Bookings/ViewBookings';
 import ViewFlights from './components/Bookings/ViewFlights';
 import CustomerProfile from './components/Profile/CustomerProfile';
 import EmployeeProfile from './components/Profile/EmployeeProfile';
+import Payment from './components/Payment';
 import Airline from './components/Airline';
 
 import './App.css';
@@ -28,6 +29,7 @@ function App() {
       <Route exact path="/EmployeeProfile" component={EmployeeProfile} />
       <Route exact path="/Bookings" component={ViewBookings} />
       <Route exact path="/ViewFlights" component={ViewFlights} />
+      <Route exact path="/Payment" component={Payment} />
     </>
   );
 }

@@ -13,7 +13,10 @@ const flightDetailSchema = new Schema({
     duration: String, // In minutes or hours
     startTime: String, 
     endTime: String,
-    totalAvailableSeats: {type: Number, default: 50}
+    seats: [{
+        seatNumber: String,
+        isBooked: Boolean,
+    }]
 },
 { 
     versionKey: false 

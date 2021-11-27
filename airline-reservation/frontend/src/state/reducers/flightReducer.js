@@ -1,11 +1,13 @@
 import {
     STORE_SEARCH_PARAMS,
-    GET_FLIGHT_DETAILS
+    GET_FLIGHT_DETAILS,
+    MAKE_BOOKING
 } from '../action-creators/types';
   
   const initialState = {
     searchParams: {},
-    flightDetails: []
+    flightDetails: [],
+    bookingDetails: []
   };
   
   const reducer = (state = initialState, action) => {
@@ -19,6 +21,11 @@ import {
         return{
           ...state,
           flightDetails: action.payload
+        }
+      case MAKE_BOOKING:
+        return {
+          ...state,
+          bookingDetails: action.payload
         }
       default:
         return state;
