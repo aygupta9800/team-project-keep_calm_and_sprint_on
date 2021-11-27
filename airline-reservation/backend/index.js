@@ -53,7 +53,7 @@ const db = mongoose.connection;
 db.on('error', (error) => console.log(error))
 db.once('open', () => console.log('Connected to Database'));
 
-// To listen to port 3001
+// To listen to port 3009
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 });
