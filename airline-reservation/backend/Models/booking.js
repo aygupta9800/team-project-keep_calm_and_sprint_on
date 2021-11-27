@@ -12,7 +12,7 @@ const bookingSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "FlightDetail"
     },
-    seatNumbers: [Number],
+    seatNumbers: [String],
     bookingDateTime: String,
     totalPricePaid: Number,
     totalPassengers: Number,

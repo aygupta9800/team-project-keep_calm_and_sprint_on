@@ -14,7 +14,7 @@ const ViewFlights = () => {
     const [rows, setRows] = useState([]);
 
     const columns = [
-        { id: 'duration', label: 'Duration', minWidth: 100 },
+        { id: 'duration', label: 'Duration', minWidth: 170 },
         { id: 'timings', label: 'Flight Timings', minWidth: 100 },
         {
           id: 'origin',label: 'Origin',minWidth: 170,

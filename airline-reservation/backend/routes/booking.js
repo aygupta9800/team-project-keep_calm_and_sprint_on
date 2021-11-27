@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post('/add', async (req, res) => {
     try {
-        const {userId, flightId, totalSeatNeeded, mileagePointsToUse, totalPricePaid, flightClass, identityNumber } = req.body;
+        const {userId, flightId, mileagePointsToUse, totalPricePaid, flightClass, identityNumber, seats } = req.body;
         let user = await Users.findById(userId);
         if (!user) {
             return res.status(400).json({msg: "Not valid user"});
@@ -19,28 +19,35 @@ router.post('/add', async (req, res) => {
         if (user.mileagePoints < mileagePointsToUse) {
             return res.status(400).json({msg: "Not enough mileage points"});
         }
-        const flight = await FlightDetail.findById(flightId);
-        if (flight.totalAvailableSeats < totalSeatNeeded) {
-            return res.status(400).json({msg: "Not enough seats on flight"});
+        let flight = await FlightDetail.findById(flightId);
+        const seatsBooked = [];
+        let flightsSeats = flight.seats || [];
+        for (let i=0; i< flightsSeats.length; i++ ) {
+            for (let j=0; j< seats.length; j++) {
+                if (flightsSeats[i].seatNumber == seats[j].seatNumber) {
+                    if (!flightsSeats[i].isBooked) {
+                        flightsSeats[i].isBooked = true;
+                        seatsBooked.push(flightsSeats[i].seatNumber);
+                    }else{
+                        return res.status(400).json({msg: "Same seat cant be booked twice"})
+                    }
+                }
+            }
         }
-        const seats = [];
-        for (let i= 0; i< totalSeatNeeded; i++) {
-            seats.push(flight.totalAvailableSeats - i);
-        }
+        flight = await flight.save();
         let booking = new Booking({
             userId: userId,
             flightId: flightId,
-            seatNumbers: seats,
+            seatNumbers: seatsBooked,
             bookingDateTime: new Date(),
             totalPricePaid,
-            totalPassengers: totalSeatNeeded,
             identityNumber,
             flightClass,
         });
         booking = await booking.save();
         user.mileagePoints = user.mileagePoints - mileagePointsToUse + flight.miles
         user = await user.save();
-        return res.status(200).json({ booking, user });
+        return res.status(200).json({ booking, user, flight });
     
     } catch(error) {
         console.log("error==", error);
