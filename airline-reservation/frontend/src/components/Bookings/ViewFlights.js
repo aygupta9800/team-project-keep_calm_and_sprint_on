@@ -13,7 +13,7 @@ const ViewFlights = () => {
     const [rows, setRows] = useState([]);
 
     const columns = [
-        { id: 'duration', label: 'Duration', minWidth: 170 },
+        { id: 'duration', label: 'Duration', minWidth: 100 },
         { id: 'timings', label: 'Flight Timings', minWidth: 100 },
         {
           id: 'origin',label: 'Origin',minWidth: 170,
@@ -41,7 +41,8 @@ const ViewFlights = () => {
                             timings: `${item.startTime} - ${item.endTime}`,
                             origin: item.source,
                             destination: item.destination,
-                            price: item.basePrice
+                            price: item.basePrice,
+                            seats: item.seats
                         });
                     }
                 }
@@ -57,7 +58,8 @@ const ViewFlights = () => {
                             timings: `${item.startTime} - ${item.endTime}`,
                             origin: item.source,
                             destination: item.destination,
-                            price: item.basePrice
+                            price: item.basePrice,
+                            seats: item.seats
                         });
                     }
                 }
@@ -73,7 +75,8 @@ const ViewFlights = () => {
                             timings: `${item.startTime} - ${item.endTime}`,
                             origin: item.source,
                             destination: item.destination,
-                            price: item.basePrice
+                            price: item.basePrice,
+                            seats: item.seats
                         });
                     }
                 }
