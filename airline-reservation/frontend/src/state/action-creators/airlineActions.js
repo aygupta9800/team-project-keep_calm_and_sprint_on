@@ -5,7 +5,6 @@ import {
   LOGOUT_SUCCESS,
   STORE_SEARCH_PARAMS,
   GET_AIRLINE_DETAILS,
-  MAKE_BOOKING
 } from './types';
 
 
@@ -16,14 +15,13 @@ export const storeSearchParams = (airlineDetails, history) => async (dispatch) =
     });
 };
 
-export const getFlightDetails = () => async (dispatch) => {
+export const getAirlineDetails = () => async (dispatch) => {
     axios.get(`${server}/airline`)
       .then((response) => {
         dispatch({
           type: GET_AIRLINE_DETAILS,
           payload: response.data,
         });
-        console.log("In airlineAction.js", response.data);
         return true;
       })
       .catch((err) => {
