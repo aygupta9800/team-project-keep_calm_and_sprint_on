@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
@@ -11,7 +12,7 @@ import airlineDetails from "../state/action-creators/airlineActions.js";
 import { getAirlineDetails } from "../state/action-creators/airlineActions.js";
 import AirlinePopup from "./AirlinePopup.js";
 import CustomTextField from "./Input/CustomTextField.js";
-import { createStore } from "redux";
+import { compose, createStore } from "redux";
 import reducer from "../state/reducers/airlineReducer.js";
 import { ColorButton3 } from "../constants/index.js";
 import ApplicationEmployeeNavbar from "./ApplicationEmployeeNavbar/ApplicationEmployeeNavbar.js";
@@ -34,15 +35,16 @@ const Airline = (props) => {
   const { airlineDetails } = props;
   const dispatch = useDispatch();
   const store = createStore(reducer);
+  const history = useHistory();
 
-//   useEffect(async () => {
-//     await dispatch(getAirlineDetails());
-//     const result = await dispatch(getAirlineDetails());
-//     console.log("Result == ", result);
-//   }, []);
+  //   useEffect(async () => {
+  //     await dispatch(getAirlineDetails());
+  //     const result = await dispatch(getAirlineDetails(history));
+  //     console.log("Result == ", props);
+  //   }, []);
 
-  console.log("airlineDetails ++", airlineDetails);
-
+  //   const airlineData = await props.history.location.state.airlineDetails.data;
+  //   console.log("airlineData", airlineData);
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const mileageNumber = useSelector(
@@ -136,20 +138,27 @@ const Airline = (props) => {
 
             <br />
           </div>
-          <ColorButton3
-            variant="contained"
-            onClick={() => {
-              handleOpen(true);
-            }}
-            style={{
-              height: "50px",
-              alignSelf: "center",
-              width: "100%",
-              marginBottom: "10px",
-            }}
-          >
-            Update
-          </ColorButton3>
+          <div>
+            {userType === "employee" ? (
+              <ColorButton3
+                variant="contained"
+                onClick={() => {
+                  handleOpen(true);
+                }}
+                style={{
+                  height: "50px",
+                  alignSelf: "center",
+                  width: "100%",
+                  marginBottom: "10px",
+                }}
+              >
+                Update
+              </ColorButton3>
+            ) : (
+              <p></p>
+            )}
+          </div>
+
           <AirlinePopup open={open} handleClose={handleClose}></AirlinePopup>
         </Grid>
       </div>
@@ -159,6 +168,7 @@ const Airline = (props) => {
 Airline.propTypes = {
   //...prop type definitions here
   userType: PropTypes.string,
+  airlineDetails: PropTypes.object,
 };
 
 export default Airline;
