@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import MobileeRightMenuSlider from '@material-ui/core/Drawer';
+import { getUserDetails, updateProfile } from "../../state/action-creators/profileAction";
 import {
     AppBar,
     Toolbar,
@@ -24,6 +25,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import logo from '../../images/icon.svg';
 import { logout } from '../../state/action-creators/loginActions.js';
 import '../LandingNavbar/LandingNavbar.css';
+import { getBookings } from '../../state/action-creators/bookingAction';
 
 // CSS styles
 const useStyles = makeStyles(theme=>({
@@ -96,7 +98,7 @@ const ApplicationCustomerNavbar = (props) => {
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
-                  <ListItem button key={key} component={Link} onClick={() => { if (listItem.listText === 'Logout') { dispatch(logout(history)); } }}
+                  <ListItem button key={key} component={Link} onClick={() => { if (listItem.listText === 'Logout') { dispatch(logout(history)); } if(listItem.listText === 'Profile')  { dispatch(getUserDetails()); } if(listItem.listText === 'View Bookings')  { dispatch(getBookings()); }}}
                     to={{pathname: listItem.listPath, state: {userType: 'user'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
                       <ListItemText className={classes.listItem} primary={listItem.listText} />
