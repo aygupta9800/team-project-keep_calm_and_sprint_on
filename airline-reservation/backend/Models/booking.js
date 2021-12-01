@@ -18,6 +18,7 @@ const bookingSchema = new Schema({
     totalPassengers: Number,
     identityNumber: String,
     flightClass: String,
+    mileagePointsUsed: { type: Number, default: 0 },
 },
 { 
     versionKey: false 

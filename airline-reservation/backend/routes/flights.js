@@ -23,6 +23,18 @@ router.get('', async (req, res) => {
     }  
 });
 
+router.get('/:flightId', async (req, res) => {
+    const { flightId } = req.params;
+    try {
+        const flights = await FlightDetail.findById(flightId);
+        return res.status(200).json({ data: flights });
+    
+    } catch(error) {
+        console.log("error==", error);
+        return res.status(500).json({msg: 'error'});
+          
+    }  
+});
 //Add seats to all flight
 // router.post('/add/seats', async (req, res) => {
 //     try {
