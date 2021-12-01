@@ -6,6 +6,7 @@ import Users from "../Models/users.js";
 import Booking from "../Models/booking.js";
 import FlightDetail from "../Models/flightDetails.js";
 import flightsData from "../utils/flightData.js";
+import User from "../Models/users.js";
 
 const router = express.Router();
 
@@ -69,6 +70,48 @@ router.get('/user/:userId', async (req, res) => {
         return res.status(500).json({msg: 'error'});
           
     }  
-}); 
+});
+
+router.put('/:bookingId', async (req, res) => {
+    try {
+        const { bookingId } = req.params;
+        const { flightClass } = req.body;
+        const booking = await Booking.findById(bookingId);
+        if (!booking) {
+            return res.status(400).json({msg: 'Booking with given Id doesnt exist'});
+        }
+        booking.flightClass = flightClass;
+        const savedbooking = await booking.save();
+        return res.status(200).json({data: savedbooking});
+    } catch(error) {
+
+    }
+});
+
+router.delete('/:bookingId', async (req, res) => {
+    console.log('delete');
+    try {
+        const { bookingId } = req.params;
+        const booking = await Booking.findByIdAndDelete(bookingId);
+        const { userId, flightId } = booking;
+        const user = await User.findById(userId);
+        user.mileagePoints = user.mileagePoints + booking.mileagePointsUsed;
+        const flight = await FlightDetail.findById(flightId);
+        let flightsSeats = flight.seats;
+        let bookingSeats = booking.seatNumbers
+        for (let i=0; i< flightsSeats.length; i++ ) {
+            for (let j=0; j< bookingSeats.length; j++) {
+                if (flightsSeats[i].seatNumber === bookingSeats[j]) {
+                    flightsSeats[i].isBooked = false;
+                }
+            }
+        }
+        await flight.save();
+        await user.save();
+        return res.status(200).json({ booking, mileagePoints:  user.mileagePoints});
+    } catch (error) {
+
+    }
+})
 
 export default router;
