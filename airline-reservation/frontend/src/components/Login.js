@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector, useDispatch } from 'react-redux';
-import LandingNavbar from './LandingNavbar/LandingNavbar.js';
+import { useDispatch } from 'react-redux';
 import { ColorButton4 } from '../constants/index'
 import { userLogin } from '../state/action-creators/loginActions.js';
+import { storeSearchParams, resetFlightData } from '../state/action-creators/flightActions';
 //import { employeeLogin, customerLogin } from '../state/action-creators/loginActions.js';
 import {
   Grid,
@@ -14,6 +14,7 @@ import {
   FormControlLabel,
   FormControl,
 } from '@material-ui/core';
+import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import '../components/styles.css';
 
 
@@ -49,6 +50,8 @@ const Login = () => {
 
   const onLogIn = () => {
       dispatch(userLogin({ identifier: userId, password, userType }, history));
+      dispatch(storeSearchParams({}));
+      dispatch(resetFlightData())
   };
 
   return (  

@@ -30,13 +30,23 @@ export const getFlightDetails = () => async (dispatch) => {
     });
 };
 
-export const makeBooking = (bookingDetails) => async (dispatch) => {
+export const resetFlightData = () => async (dispatch) => {
+  dispatch({
+    type: GET_FLIGHT_DETAILS,
+    payload: [],
+  });
+  return true;
+}
+
+export const makeBooking = (bookingDetails, history) => async (dispatch) => {
   axios.post(`${server}/booking/add`, bookingDetails)
     .then((response) => {
       dispatch({
         type: MAKE_BOOKING,
         payload: response.data,
       });
+      alert("Booking Confirmed");
+      history.push('/ViewFlights');
       return true;
     })
     .catch((err) => {

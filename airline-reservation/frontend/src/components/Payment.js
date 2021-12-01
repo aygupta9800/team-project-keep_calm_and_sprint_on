@@ -58,8 +58,8 @@ const Payment = (props) => {
 
   const confirmBooking = () => {
       const bookingData = {
-        userId: bookingDetails.userId,
-        flightId: bookingDetails.flightId,
+        userId: bookingDetails.flightDetails.userId,
+        flightId: bookingDetails.flightDetails.flightId,
         totalSeatNeeded: bookingDetails.totalSeats,
         mileagePointsToUse: bookingDetails.redeemPoints,
         totalPricePaid: bookingDetails.totalSeats * (bookingDetails.price + (bookingDetails.cabinType === 'Economy' ? 0 : bookingDetails.cabinType === 'Business' ? 100 : 50)) - bookingDetails.redeemPoints,
@@ -67,7 +67,7 @@ const Payment = (props) => {
         identityNumber: bookingDetails.identityNumber,
         seats: bookingDetails.seat
       }
-      dispatch(makeBooking(bookingData));
+      dispatch(makeBooking(bookingData, history));
   }
 
   return (
