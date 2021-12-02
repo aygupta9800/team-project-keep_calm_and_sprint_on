@@ -108,7 +108,7 @@ const ApplicationCustomerNavbar = (props) => {
                       if (listItem.listText === 'Logout') {
                           dispatch(logout(history));
                       } if(listItem.listText === 'Profile') {
-                          dispatch(getUserDetails());
+                          dispatch(getUserDetails(userDetails._id));
                       }}}
                     to={{pathname: listItem.listPath, state: {userType: 'user'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
