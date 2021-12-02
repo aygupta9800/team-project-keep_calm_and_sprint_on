@@ -327,9 +327,9 @@ const MakeBookingDialog = (props) => {
                 <MenuItem value="FirstClass">First Class</MenuItem>
             </TextField>        
             <TextField
-              label="Passport"
+              label="Government Id"
               variant="outlined"
-              placeholder = "Enter Passport Number"
+              placeholder = "Enter Government Id Number"
               fullWidth
               required
               onChange={(e) => {

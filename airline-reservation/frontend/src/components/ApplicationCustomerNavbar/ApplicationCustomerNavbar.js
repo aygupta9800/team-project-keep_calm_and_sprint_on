@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import MobileeRightMenuSlider from '@material-ui/core/Drawer';
-import { useSelector, useDispatch } from "react-redux";
 import { getUserDetails, updateProfile } from "../../state/action-creators/profileAction";
 import {
     AppBar,
@@ -80,7 +80,12 @@ const ApplicationCustomerNavbar = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state.login.userDetails);
+  const userDetails = useSelector((state) => state.login.userDetails.data);
+  useEffect(() => {
+    if (Object.keys(userDetails).length > 0) {
+        dispatch(getBookings(userDetails._id));
+    }
+  }, [userDetails])
 
   const [state, setState] = useState({
       left: false
@@ -99,7 +104,12 @@ const ApplicationCustomerNavbar = (props) => {
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
-                  <ListItem button key={key} component={Link} onClick={() => { if (listItem.listText === 'Logout') { dispatch(logout(history)); } if(listItem.listText === 'Profile')  { dispatch(getUserDetails(userDetails.data._id)); } if(listItem.listText === 'View Bookings')  { dispatch(getBookings(userDetails.data._id)); }}}
+                  <ListItem button key={key} component={Link} onClick={() => {
+                      if (listItem.listText === 'Logout') {
+                          dispatch(logout(history));
+                      } if(listItem.listText === 'Profile') {
+                          dispatch(getUserDetails());
+                      }}}
                     to={{pathname: listItem.listPath, state: {userType: 'user'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
                       <ListItemText className={classes.listItem} primary={listItem.listText} />
