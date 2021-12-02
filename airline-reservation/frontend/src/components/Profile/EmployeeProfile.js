@@ -31,8 +31,45 @@ export default function EmployeeProfile() {
   const history = useHistory();
 
   const userProfileState = useSelector((state) => state.profile.userProfile);
+  const userDetails = useSelector((state) => state.login.userDetails);
   
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(!re.test(String(email).toLowerCase())){
+      alert('Please enter a valid email address.');
+      return false;
+    }else{
+      return true;
+    }
+  }
 
+  function ValidateDOB(dob) {
+    var dateString = dob;
+    var regex = /(((0|1)[0-9]|2[0-9]|3[0-1])\-(0[1-9]|1[0-2])\-((19|20)\d\d))$/;
+    if (regex.test(dateString)) {
+        var parts = dateString.split("-");
+        var dtDOB = new Date(parts[1] + "-" + parts[0] + "-" + parts[2]);
+        var dtCurrent = new Date();
+        if (dtCurrent.getFullYear() - dtDOB.getFullYear() < 14) {
+          alert("Eligibility 14 years ONLY.")
+            return false;
+        }
+        if (dtCurrent.getFullYear() - dtDOB.getFullYear() == 14) {
+            if (dtCurrent.getMonth() < dtDOB.getMonth()) {
+                return false;
+            }
+            if (dtCurrent.getMonth() == dtDOB.getMonth()) {
+                if (dtCurrent.getDate() < dtDOB.getDate()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    } else {
+        alert("Please enter a correct date and in dd-mm-yyyy format.");
+        return false;
+    }
+  }
 
   //const [userType, setUserType] = useState(userProfileState.userType);\
   const [open, setOpen] = useState(false);
@@ -40,25 +77,25 @@ export default function EmployeeProfile() {
   const [userName, setUserName] = useState(userProfileState.userName);
   const [dob, setDOB] = useState(userProfileState.dob);
   const [email, setEmail] = useState(userProfileState.email);
-  const [phoneNumber, setPhoneNumber] = useState(userProfileState.phoneNumber);
-  const [mileageNumber, setMileageNumber] = useState(userProfileState.mileageNumber);
+  const [phone, setPhone] = useState(userProfileState.phone);
   const [mileagePoints, setMileagePoints] = useState(userProfileState.mileagePoints);
   const [addressline1, setAddressLine] = useState(userProfileState.address?.addressline1);
   const [city, setCity] = useState(userProfileState.address?.city);
   const [state, setState] = useState(userProfileState.address?.state);
   const [country, setCountry] = useState(userProfileState.address?.country);
+  const [empId, setEmpId] = useState(userProfileState.empId);
   
   React.useEffect(() => {
     setUserName(userProfileState.userName);
     setDOB(userProfileState.dob);
     setEmail(userProfileState.email);
-    setPhoneNumber(userProfileState.phoneNumber);
-    setMileageNumber(userProfileState.mileageNumber);
+    setPhone(userProfileState.phone);
     setMileagePoints(userProfileState.mileagePoints);
     setAddressLine(userProfileState.address?.addressline1);
     setCity(userProfileState.address?.city);
     setState(userProfileState.address?.state);
     setCountry(userProfileState.address?.country);
+    setEmpId(userProfileState.empId);
   }, [userProfileState])
   const dispatch = useDispatch();
 
@@ -74,12 +111,10 @@ export default function EmployeeProfile() {
   const handleOnChangeEmail = (event) => {
     setEmail(event.target.value);
   };
-  const handleOnChangePhoneNumber = (event) => {
-    setPhoneNumber(event.target.value);
+  const handleOnChangephone = (event) => {
+    setPhone(event.target.value);
   };
-  const handleOnChangeMileageNumber = (event) => {
-    setMileageNumber(event.target.value);
-  };
+
   const handleOnChangeMileagePoints = (event) => {
     setMileagePoints(event.target.value);
   };
@@ -101,8 +136,7 @@ export default function EmployeeProfile() {
       userName,
       dob,
       email,
-      phoneNumber,
-      mileageNumber,
+      phone,
       mileagePoints,
       address: {
         addressline1,
@@ -112,11 +146,13 @@ export default function EmployeeProfile() {
         //zipcode: zipcodeRef.current.value,
       },
     };
-    dispatch(updateProfile(userProfile));
-       setOpen(true);
-       setTimeout(()=>{
-           setOpen(false);
-       }, 2000)
+    if(validateEmail(email) && ValidateDOB(dob)) {
+      dispatch(updateProfile(userProfile, userDetails.data._id));
+        setOpen(true);
+        setTimeout(()=>{
+            setOpen(false);
+        }, 2000)
+      }
   };
 
   return (
@@ -125,11 +161,10 @@ export default function EmployeeProfile() {
       <div className="employeeProfile">
         <Grid className={classes.wrapper}>
           <div>
-            <h3> Passanger Information (Adult) </h3>
+            <h3> Employee Information (Adult) </h3>
             <p>
-              Enter the required information for each traveller
-              <br /> and be sure it matches exactly to the government
-              <br /> issued ID presented at the airport.{" "}
+              Enter the required information and please
+              <br /> present your employee ID card during checkin.{" "}
             </p>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -170,14 +205,14 @@ export default function EmployeeProfile() {
             />
 
             <CustomTextField
-              label="phoneNumber"
+              label="phone"
               variant="outlined"
               placeholder="Phone Number"
               fullWidth
               required
-              value={phoneNumber}
+              value={phone}
               onChange={(e) => {
-                handleOnChangePhoneNumber(e);
+                handleOnChangephone(e);
               }}
             />
           </div>
@@ -189,10 +224,7 @@ export default function EmployeeProfile() {
               fullWidth
               required
               disabled={true}
-              value={mileageNumber}
-              onChange={(e) => {
-                handleOnChangeMileageNumber(e);
-              }}
+              value={empId}
             />
 
             <CustomTextField
@@ -262,10 +294,10 @@ export default function EmployeeProfile() {
           <div>
             <h3> Bag Information </h3>
             <p>
-              Each passanger is allowed one free carry-on bag and one personal
+              Each employee is allowed one free carry-on bag and one personal
               item. <br />
-              First checked bag for each customer is also free. <br />
-              Second bag checked free is waived for loyalty program members.
+              Two checked bag for each employee is also free. <br />
+              
             </p>
             <br />
           </div>

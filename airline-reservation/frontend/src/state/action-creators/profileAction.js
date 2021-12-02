@@ -7,8 +7,8 @@ import {
   UPDATE_PROFILE
 } from './types';
 
-export const getUserDetails = () => async (dispatch) => {
-    axios.get(`${server}/profile/user/619bc9b2ea585778faad8f74`)
+export const getUserDetails = (id) => async (dispatch) => {
+    axios.get(`${server}/profile/user/${id}`)
       .then((response) => {
         dispatch({
           type: GET_USER_DETAILS,
@@ -22,8 +22,8 @@ export const getUserDetails = () => async (dispatch) => {
       });
   };
 
-export const updateProfile = (userDetails) => async (dispatch) => {
-    axios.put('http://localhost:3009/profile/user/619bc9b2ea585778faad8f74', userDetails).then(res=>{
+export const updateProfile = (userDetails, id ) => async (dispatch) => {
+    axios.put(`${server}/profile/user/${id}`, userDetails).then(res=>{
         dispatch({
             type:UPDATE_PROFILE,
             payload: userDetails
