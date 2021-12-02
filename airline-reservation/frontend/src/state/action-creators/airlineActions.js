@@ -5,6 +5,7 @@ import {
   LOGOUT_SUCCESS,
   STORE_SEARCH_PARAMS,
   GET_AIRLINE_DETAILS,
+  UPDATE_AIRLINE,
 } from "./types";
 
 const airlineDetails = null;
@@ -41,5 +42,23 @@ export const logout = (history) => async (dispatch) => {
   });
   history.push("/");
 };
+
+export const updateAirline = (airlineId, userId, userType, airlineDetails) => async (dispatch) => {
+  axios
+  .put(`${server}/airline`, {airlineId, userId, userType, airlineDetails})
+  .then((response) => {
+    const airlineDetails = response.data?.data;
+    dispatch({
+      type: GET_AIRLINE_DETAILS,
+      payload: response.data?.data,
+    });
+    alert(" Updated Successfully");
+    return airlineDetails;
+  })
+  .catch((err) => {
+    alert(err);
+    return false;
+  });
+}
 
 export default airlineDetails;

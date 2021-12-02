@@ -1,12 +1,14 @@
 import {
   USER_SIGNUP,
   USER_LOGIN,
+  SET_MILEAGE_POINTS,
 } from '../action-creators/types';
 
 const initialState = {  
   // define initial state here
   flightDetails: [],
-  userDetails: {}
+  userDetails: {},
+  mileage: 0
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +22,12 @@ const reducer = (state = initialState, action) => {
         return{
           ...state,
           userDetails: action.payload
+        }
+      }
+      case SET_MILEAGE_POINTS: {
+        return{
+          ...state,
+          mileage: action.payload
         }
       }
     default:

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,7 +24,7 @@ import logo from '../../images/icon.svg';
 import { logout } from '../../state/action-creators/loginActions.js';
 import '../LandingNavbar/LandingNavbar.css';
 import { getUserDetails, updateProfile } from "../../state/action-creators/profileAction";
-
+import { getAllBookings } from '../../state/action-creators/bookingAction';
 
 // CSS styles
 const useStyles = makeStyles(theme=>({
@@ -74,7 +74,11 @@ const ApplicationCustomerNavbar = (props) => {
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state.login.userDetails);
+  const userDetails = useSelector((state) => state.login.userDetails.data);
+
+  useEffect(() => {
+    dispatch(getAllBookings());
+  }, [])
 
   const [state, setState] = useState({
       left: false
@@ -116,7 +120,10 @@ const ApplicationCustomerNavbar = (props) => {
                 anchor='left'>
                 {sideList('left')}
             </MobileeRightMenuSlider>
-            <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt=''/>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <span style={{fontSize: '40px', fontWeight: 'bold', color: 'orange', fontFamily: 'auto'}}>United</span>
+                <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt='' />
+            </div>
           </Toolbar>
         </AppBar>
       </Box>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
@@ -30,14 +29,16 @@ const useStyles = makeStyles((theme) => ({
 const Airline = (props) => {
   const dispatch = useDispatch();
 
-    useEffect(() => {
-      dispatch(getAirlineDetails());
-    }, []);
+  useEffect(() => {
+    dispatch(getAirlineDetails());
+  }, []);
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const airlineDetails = useSelector((state) => state.airline.airlineDetails)
   const userType = props.location.state.userType;
+  const mileageNumber = useSelector((state) => state.login.userDetails.data.mileageNumber);
+  const empId = useSelector((state) => state.login.userDetails.data.empId);
 
   const handleClose = () => {
     setOpen(false);
@@ -54,6 +55,16 @@ const Airline = (props) => {
         <ApplicationCustomerNavbar />
       )}
       <div className="employeeProfile">
+      <table style={{width: '70%', height:'50px', border: '1px solid black', background: '#fff'}}>
+        <tbody>
+            <tr>
+                <td>{userType === 'employee' ?
+                    <span> Unique Employee Identification Number: <span style={{fontWeight: 'bold', background: 'yellow'}}> {empId} </span></span> :
+                    <span> Unique Customer Mileage Number: <span style={{fontWeight: 'bold', background: 'yellow'}}> {mileageNumber} </span></span>
+                    }</td>
+            </tr>
+        </tbody>
+        </table>
         <Grid className={classes.wrapper}>
           <div>
             <Typography variant="h2" align="center" style={{ color: "orange" }}>
@@ -75,14 +86,6 @@ const Airline = (props) => {
               style={{ wordWrap: "break-word", color: "#222" }}
             >
               {airlineDetails.desc}
-              {/* United is connecting people, uniting the world United has the most
-              comprehensive route network among North American carriers. A
-              modern fleet which is the most fuel-efficient among U.S. network
-              carriers (when adjusted for cabin size. Industry-leading loyalty
-              program that provides more opportunities to earn and redeem miles
-              worldwide Optimal hub locations, including hubs in the four
-              largest cities in the United States Approximately 70,000 employees
-              reside in every U.S. state and in countries around the world */}
             </Typography>
           </div>
           <div
@@ -146,7 +149,7 @@ const Airline = (props) => {
             )}
           </div>
 
-          <AirlinePopup open={open} handleClose={handleClose}></AirlinePopup>
+          <AirlinePopup open={open} handleClose={handleClose} airlineDetails={airlineDetails}></AirlinePopup>
         </Grid>
       </div>
     </div>
