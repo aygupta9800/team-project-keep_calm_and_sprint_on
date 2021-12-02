@@ -1,3 +1,7 @@
+Project Journal Url:
+https://docs.google.com/document/d/1_SEd8QqVfUuXjv5pqrTaQ8EOWwVTtKd5qkrMDW1TcoQ/edit
+
+
 Steps to start the project
 
 1. Install node 14 in system using nvm
