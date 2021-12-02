@@ -28,7 +28,45 @@ const CustomerProfile = () => {
   const history = useHistory();
 
   const userProfileState = useSelector((state) => state.profile.userProfile);
+  const userDetails = useSelector((state) => state.login.userDetails);
   
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(!re.test(String(email).toLowerCase())){
+      alert('Please enter a valid email address.');
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  function ValidateDOB(dob) {
+    var dateString = dob;
+    var regex = /(((0|1)[0-9]|2[0-9]|3[0-1])\-(0[1-9]|1[0-2])\-((19|20)\d\d))$/;
+    if (regex.test(dateString)) {
+        var parts = dateString.split("-");
+        var dtDOB = new Date(parts[1] + "-" + parts[0] + "-" + parts[2]);
+        var dtCurrent = new Date();
+        if (dtCurrent.getFullYear() - dtDOB.getFullYear() < 14) {
+           alert("Eligibility 14 years ONLY.")
+            return false;
+        }
+        if (dtCurrent.getFullYear() - dtDOB.getFullYear() == 14) {
+            if (dtCurrent.getMonth() < dtDOB.getMonth()) {
+                return false;
+            }
+            if (dtCurrent.getMonth() == dtDOB.getMonth()) {
+                if (dtCurrent.getDate() < dtDOB.getDate()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    } else {
+        alert("Please enter a correct date and in dd-mm-yyyy format.");
+        return false;
+    }
+  }
 
 
   //const [userType, setUserType] = useState(userProfileState.userType);\
@@ -37,7 +75,7 @@ const CustomerProfile = () => {
   const [userName, setUserName] = useState(userProfileState.userName);
   const [dob, setDOB] = useState(userProfileState.dob);
   const [email, setEmail] = useState(userProfileState.email);
-  const [phoneNumber, setPhoneNumber] = useState(userProfileState.phoneNumber);
+  const [phone, setPhone] = useState(userProfileState.phone);
   const [mileageNumber, setMileageNumber] = useState(userProfileState.mileageNumber);
   const [mileagePoints, setMileagePoints] = useState(userProfileState.mileagePoints);
   const [addressline1, setAddressLine] = useState(userProfileState.address?.addressline1);
@@ -49,7 +87,7 @@ const CustomerProfile = () => {
     setUserName(userProfileState.userName);
     setDOB(userProfileState.dob);
     setEmail(userProfileState.email);
-    setPhoneNumber(userProfileState.phoneNumber);
+    setPhone(userProfileState.phone);
     setMileageNumber(userProfileState.mileageNumber);
     setMileagePoints(userProfileState.mileagePoints);
     setAddressLine(userProfileState.address?.addressline1);
@@ -71,8 +109,8 @@ const CustomerProfile = () => {
   const handleOnChangeEmail = (event) => {
     setEmail(event.target.value);
   };
-  const handleOnChangePhoneNumber = (event) => {
-    setPhoneNumber(event.target.value);
+  const handleOnChangephone = (event) => {
+    setPhone(event.target.value);
   };
   const handleOnChangeMileageNumber = (event) => {
     setMileageNumber(event.target.value);
@@ -98,7 +136,7 @@ const CustomerProfile = () => {
       userName,
       dob,
       email,
-      phoneNumber,
+      phone,
       mileageNumber,
       mileagePoints,
       address: {
@@ -109,11 +147,14 @@ const CustomerProfile = () => {
         //zipcode: zipcodeRef.current.value,
       },
     };
-    dispatch(updateProfile(userProfile));
-       setOpen(true);
-       setTimeout(()=>{
-           setOpen(false);
-       }, 2000)
+    
+    if(validateEmail(email) && ValidateDOB(dob)) {
+      dispatch(updateProfile(userProfile, userDetails.data._id));
+        setOpen(true);
+        setTimeout(()=>{
+          setOpen(false);
+        }, 2000)
+    }
   };
 
 
@@ -169,14 +210,14 @@ const CustomerProfile = () => {
             />
 
             <CustomTextField
-              label="phoneNumber"
+              label="phone"
               variant="outlined"
               placeholder="Phone Number"
               fullWidth
               required
-              value={phoneNumber}
+              value={phone}
               onChange={(e) => {
-                handleOnChangePhoneNumber(e);
+                handleOnChangephone(e);
               }}
             />
           </div>
