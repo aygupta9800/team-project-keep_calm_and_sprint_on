@@ -97,7 +97,12 @@ const ApplicationCustomerNavbar = (props) => {
           <Divider />
           <List>
               {menuItems.map((listItem, key) => (
-                  <ListItem button key={key} component={Link} onClick={() => { if (listItem.listText === 'Logout') { dispatch(logout(history)); }  if(listItem.listText === 'Profile')  { dispatch(getUserDetails(userDetails.data._id)); }}} 
+                  <ListItem button key={key} component={Link} onClick={() => {
+                      if (listItem.listText === 'Logout') {
+                          dispatch(logout(history));
+                      }  if(listItem.listText === 'Profile')  {
+                          dispatch(getUserDetails(userDetails._id));
+                        }}} 
                   to={{pathname: listItem.listPath, state: {userType: 'employee'}}}>
                       <ListItemIcon className={classes.listItem}>{listItem.listIcon}</ListItemIcon>
                       <ListItemText className={classes.listItem} primary={listItem.listText} />
