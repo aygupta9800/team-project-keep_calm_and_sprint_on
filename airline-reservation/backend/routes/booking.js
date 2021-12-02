@@ -46,7 +46,7 @@ router.post('/add', async (req, res) => {
             flightClass,
         });
         booking = await booking.save();
-        user.mileagePoints = user.mileagePoints - mileagePointsToUse + flight.miles
+        user.mileagePoints = user.mileagePoints - mileagePointsToUse + (flight.miles / 100)
         user = await user.save();
         return res.status(200).json({ booking, user, flight });
     
@@ -95,8 +95,8 @@ router.delete('/:bookingId', async (req, res) => {
         const booking = await Booking.findByIdAndDelete(bookingId);
         const { userId, flightId } = booking;
         const user = await User.findById(userId);
-        user.mileagePoints = user.mileagePoints + booking.mileagePointsUsed;
         const flight = await FlightDetail.findById(flightId);
+        user.mileagePoints = user.mileagePoints + booking.mileagePointsUsed - (flight.miles/100);
         let flightsSeats = flight.seats;
         let bookingSeats = booking.seatNumbers
         for (let i=0; i< flightsSeats.length; i++ ) {
