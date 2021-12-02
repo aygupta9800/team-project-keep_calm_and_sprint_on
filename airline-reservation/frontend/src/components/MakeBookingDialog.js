@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     chip: {
       margin: 2,
-      background: 'cadetblue',
+      background: 'orange',
       color: 'white',
       fontWeight: 'bold',
       textShadow: '1px 1px black'
@@ -124,8 +124,8 @@ const MakeBookingDialog = (props) => {
     const aisleSeats = [];
     const windowSeats = [];
     setPrice(props.flightDetails.price);
-    if(props.flightDetails.seats) {
-        props.flightDetails.seats.forEach((item) => {
+    if(props.seats) {
+      props.seats.forEach((item) => {
             if (((item.seatNumber.includes('1') || item.seatNumber.includes('4')) && !item.isBooked)) {
                 windowSeats.push(item.seatNumber);
             } else if (((item.seatNumber.includes('2') || item.seatNumber.includes('3')) && !item.isBooked)) {
@@ -135,7 +135,7 @@ const MakeBookingDialog = (props) => {
         setAisleSeats(aisleSeats);
         setWindowSeats(windowSeats);
     }
-  }, [props.flightDetails])
+  }, [props.seats, props.flightDetails])
 
   const onBookClick = () => {
     let isValidated = true;
@@ -180,7 +180,7 @@ const MakeBookingDialog = (props) => {
       history.push({ 
         pathname: '/Payment', 
         state: {
-          flightDetails: price,
+          flightDetails: props.flightDetails,
           price,
           basePrice: props.flightDetails.price,
           totalSeats,
@@ -269,7 +269,7 @@ const MakeBookingDialog = (props) => {
 
         <div style={{ display: "flex", justifyContent: 'space-between', padding: '20px'  }}>
             <TextField
-              label="Base Price"
+              label="Price"
               variant="outlined"
               placeholder = "Price"
               style={{marginRight: '20px'}}
@@ -436,6 +436,7 @@ const MakeBookingDialog = (props) => {
 MakeBookingDialog.propTypes = {
   // ...prop type definitions here
   open: PropTypes.bool,
+  seats: PropTypes.array,
   flightDetails: PropTypes.object,
   handleClose: PropTypes.func,
 };

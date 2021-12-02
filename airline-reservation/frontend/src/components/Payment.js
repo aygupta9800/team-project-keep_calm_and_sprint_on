@@ -66,6 +66,9 @@ const Payment = (props) => {
   });
 
   const confirmBooking = () => {
+      const seats = bookingDetails.flightDetails.seats.filter((item) => {
+          return bookingDetails.seat.includes(item.seatNumber)
+      });
       const bookingData = {
         userId: bookingDetails.flightDetails.userId,
         flightId: bookingDetails.flightDetails.flightId,
@@ -74,7 +77,7 @@ const Payment = (props) => {
         totalPricePaid: bookingDetails.totalSeats * (bookingDetails.price + (bookingDetails.cabinType === 'Economy' ? 0 : bookingDetails.cabinType === 'Business' ? 100 : 50)) - bookingDetails.redeemPoints,
         flightClass: bookingDetails.cabinType,
         identityNumber: bookingDetails.identityNumber,
-        seats: bookingDetails.seat
+        seats: seats
       }
       let isValidated = true;
       let cardNumberRegex = /^[0-9]{10}$/g; 
