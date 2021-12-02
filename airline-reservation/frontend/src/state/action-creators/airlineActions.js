@@ -21,11 +21,10 @@ export const getAirlineDetails = () => async (dispatch) => {
   axios
     .get(`${server}/airline`)
     .then((response) => {
-      const airlineDetails = response.data;
-      console.log("airlineDetails = ", airlineDetails);
+      const airlineDetails = response.data?.data;
       dispatch({
         type: GET_AIRLINE_DETAILS,
-        payload: response.data,
+        payload: response.data?.data,
       });
 
       return airlineDetails;

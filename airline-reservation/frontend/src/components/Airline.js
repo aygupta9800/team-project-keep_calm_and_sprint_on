@@ -8,12 +8,8 @@ import { Typography } from "@material-ui/core";
 import { Box } from "@mui/system";
 import MailIcon from "@material-ui/icons/Mail";
 import CallIcon from "@material-ui/icons/Call";
-import airlineDetails from "../state/action-creators/airlineActions.js";
 import { getAirlineDetails } from "../state/action-creators/airlineActions.js";
 import AirlinePopup from "./AirlinePopup.js";
-import CustomTextField from "./Input/CustomTextField.js";
-import { compose, createStore } from "redux";
-import reducer from "../state/reducers/airlineReducer.js";
 import { ColorButton3 } from "../constants/index.js";
 import ApplicationEmployeeNavbar from "./ApplicationEmployeeNavbar/ApplicationEmployeeNavbar.js";
 import ApplicationCustomerNavbar from "./ApplicationCustomerNavbar/ApplicationCustomerNavbar.js";
@@ -32,25 +28,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Airline = (props) => {
-  const { airlineDetails } = props;
   const dispatch = useDispatch();
-  const store = createStore(reducer);
-  const history = useHistory();
 
-  //   useEffect(async () => {
-  //     await dispatch(getAirlineDetails());
-  //     const result = await dispatch(getAirlineDetails(history));
-  //     console.log("Result == ", props);
-  //   }, []);
+    useEffect(() => {
+      dispatch(getAirlineDetails());
+    }, []);
 
-  //   const airlineData = await props.history.location.state.airlineDetails.data;
-  //   console.log("airlineData", airlineData);
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const mileageNumber = useSelector(
-    (state) => state.login.userDetails.data.mileageNumber
-  );
-  const empId = useSelector((state) => state.login.userDetails.data.empId);
+  const airlineDetails = useSelector((state) => state.airline.airlineDetails)
   const userType = props.location.state.userType;
 
   const handleClose = () => {
@@ -88,14 +74,15 @@ const Airline = (props) => {
               component="p"
               style={{ wordWrap: "break-word", color: "#222" }}
             >
-              United is connecting people, uniting the world United has the most
+              {airlineDetails.desc}
+              {/* United is connecting people, uniting the world United has the most
               comprehensive route network among North American carriers. A
               modern fleet which is the most fuel-efficient among U.S. network
               carriers (when adjusted for cabin size. Industry-leading loyalty
               program that provides more opportunities to earn and redeem miles
               worldwide Optimal hub locations, including hubs in the four
               largest cities in the United States Approximately 70,000 employees
-              reside in every U.S. state and in countries around the world
+              reside in every U.S. state and in countries around the world */}
             </Typography>
           </div>
           <div
@@ -106,7 +93,7 @@ const Airline = (props) => {
             style={{ display: "flex", justifyContent: "space-between" }}
           ></div>
           <div>
-            <h2 style={{ color: "orange" }}>Contact us</h2>
+            <h2 style={{ color: "orange", paddingLeft: 15 }}>Contact us</h2>
             <Box
               sx={{
                 display: "inline-flex",
@@ -122,7 +109,7 @@ const Airline = (props) => {
                 style={{ color: "black", paddingRight: "30px" }}
                 margin={5}
               >
-                abc@gmail.com
+                {airlineDetails.supportEmail}
               </Typography>
 
               <CallIcon style={{ fill: "orange" }}></CallIcon>
@@ -132,7 +119,7 @@ const Airline = (props) => {
                 style={{ color: "black", paddingRight: "30px" }}
                 margin={5}
               >
-                +16666666600
+                {airlineDetails.helplineNumber}
               </Typography>
             </Box>
 

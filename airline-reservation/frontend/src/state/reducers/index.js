@@ -3,12 +3,14 @@ import loginReducer from './loginReducer';
 import flightReducer from './flightReducer';
 import profileReducer from './profileReducer';
 import bookings from './bookingReducer';
+import airline from './airlineReducer';
 
 const reducers = combineReducers({
   login: loginReducer,
   flight: flightReducer,
   profile: profileReducer,
-  bookings: bookings
+  bookings: bookings,
+  airline: airline,
 });
 
 const rootReducer = (state, action) => {
