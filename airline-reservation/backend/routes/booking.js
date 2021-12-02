@@ -72,6 +72,33 @@ router.get('/user/:userId', async (req, res) => {
     }  
 });
 
+//get customer bookings
+router.get('', async (req, res) => {
+    try {
+        const booking = await Booking.find({});
+        return res.status(200).json({ data: booking });
+    
+    } catch(error) {
+        console.log("error==", error);
+        return res.status(500).json({msg: 'error'});
+          
+    }  
+});
+
+//get flight bookings
+router.get('/:flightId', async (req, res) => {
+    try {
+        const {flightId } = req.params;
+        const booking = await Booking.find({flightId});
+        return res.status(200).json({ data: booking });
+    
+    } catch(error) {
+        console.log("error==", error);
+        return res.status(500).json({msg: 'error'});
+          
+    }  
+});
+
 router.put('/:bookingId', async (req, res) => {
     try {
         const { bookingId } = req.params;
