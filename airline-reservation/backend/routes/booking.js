@@ -101,7 +101,7 @@ router.get('/flight/:flightId', async (req, res) => {
 
 router.put('/:bookingId', async (req, res) => {
     try {
-        const { bookingId } = req.params;
+        const { bookingId, flightId, userId } = req.params;
         const { flightClass } = req.body;
         const booking = await Booking.findById(bookingId);
         if (!booking) {
@@ -109,7 +109,9 @@ router.put('/:bookingId', async (req, res) => {
         }
         booking.flightClass = flightClass;
         const savedbooking = await booking.save();
-        return res.status(200).json({data: savedbooking});
+        const flight = await FlightDetail.findById(booking.flightId);
+        const user = await User.findById(booking.userId);
+        return res.status(200).json({booking: savedbooking, user, flight});
     } catch(error) {
 
     }
