@@ -36,7 +36,7 @@
     "styled-components": "^5.3.3",
     "web-vitals": "^1.1.2"
   },
-  "proxy": "http://cmpe202-airline-loadbalancer-1-1041265923.us-east-2.elb.amazonaws.com:3009",
+  "proxy": "http://3.145.84.75:3009",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
