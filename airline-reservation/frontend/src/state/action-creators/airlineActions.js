@@ -22,7 +22,6 @@ export const getAirlineDetails = () => async (dispatch) => {
     .get(`${server}/airline`)
     .then((response) => {
       const airlineDetails = response.data?.data;
-      console.log("airlineDetails = ", airlineDetails);
       dispatch({
         type: GET_AIRLINE_DETAILS,
         payload: response.data?.data,
