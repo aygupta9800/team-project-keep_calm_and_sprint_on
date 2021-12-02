@@ -86,7 +86,7 @@ router.get('', async (req, res) => {
 });
 
 //get flight bookings
-router.get('/:flightId', async (req, res) => {
+router.get('/flight/:flightId', async (req, res) => {
     try {
         const {flightId } = req.params;
         const booking = await Booking.find({flightId});
