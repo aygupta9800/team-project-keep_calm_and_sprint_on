@@ -46,6 +46,7 @@ export const makeBooking = (bookingDetails, history) => async (dispatch) => {
         payload: response.data,
       });
       alert("Booking Confirmed");
+      dispatch(getFlightDetails());
       history.push('/ViewFlights');
       return true;
     })

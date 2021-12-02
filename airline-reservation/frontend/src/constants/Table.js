@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -15,13 +16,27 @@ export default function StickyHeadTable(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [open, setOpen] = useState(false);
+  const [seats, setSeats] = useState([]);
+  const flights = useSelector((state) => state.flight.flightDetails);
+  const [allFlights, setAllFlights] = useState([]);
   const [flightDetails, setFlightDetails] = useState({});
+
+  useEffect(() => {
+    setAllFlights(flights);
+  }, [flights])
 
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleOpen = (row) => {
+    let selected;
+    if (allFlights.data.length > 0) {
+      selected = allFlights.data.filter((item) => {
+        return item._id === row.flightId
+      })
+    }
+    setSeats(selected[0].seats);
     setFlightDetails(row);
     setOpen(true);
   }
@@ -79,6 +94,7 @@ export default function StickyHeadTable(props) {
       </TableContainer>
       {props.isEdit && <MakeBookingDialog
         open={open}
+        seats={seats}
         flightDetails={flightDetails}
         handleClose={handleClose}
       />}
