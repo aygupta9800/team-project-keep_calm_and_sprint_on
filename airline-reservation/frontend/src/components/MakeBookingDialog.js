@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
@@ -80,6 +81,20 @@ const MakeBookingDialog = (props) => {
   const [seat, setSeat] = useState([]);
   const [windowChecked, setWindowChecked] = useState(true);
   const [aisleChecked, setAisleChecked] = useState(false);
+  const [formState, setFormState] = useState({
+    seat: {
+      error: false
+    },
+    identity: {
+      error: false
+    },
+    windowSeat: {
+      error: false
+    },
+    mileagePoints: {
+      error: false
+    }
+  })
 
   const [aisleSeats, setAisleSeats] = useState([]);
   const [windowSeats, setWindowSeats] = useState([]);
@@ -122,8 +137,89 @@ const MakeBookingDialog = (props) => {
     }
   }, [props.flightDetails])
 
+  const onBookClick = () => {
+    let isValidated = true;
+    let identityNumberRegex = /^[0-9]{10}$/g; 
+    let seatError = false;
+    let identityError = false;
+    let windowSeatError = false;
+    let mileagePointsError = false;
+    if (totalSeats < 0) {
+      seatError = true;
+      isValidated = false;
+    }
+    if (!identityNumber || (identityNumber && !identityNumber.toString().match(identityNumberRegex))) {
+      identityError = true;
+      isValidated = false;
+    }
+    if (seat.length !== parseInt(totalSeats)) {
+      windowSeatError = true;
+      isValidated = false;
+    }
+    if (redeemPoints > 100 || redeemPoints > userDetails.mileagePoints) {
+      mileagePointsError = true;
+      isValidated = false;
+    }
+    if (!isValidated) {
+      setFormState({...formState, 
+        seat: {
+          error: seatError
+        },
+        identity: {
+          error: identityError
+        },
+        windowSeat: {
+          error: windowSeatError
+        },
+        mileagePoints: {
+          error: mileagePointsError
+        }
+      })
+    }
+    if (isValidated) {
+      history.push({ 
+        pathname: '/Payment', 
+        state: {
+          flightDetails: price,
+          price,
+          basePrice: props.flightDetails.price,
+          totalSeats,
+          cabinType,
+          identityNumber: parseInt(identityNumber),
+          redeemPoints,
+          seat
+        } 
+      });
+    }
+  }
+
+  const onClose = () => {
+    setTotalSeats(1);
+    setCabinType('Economy');
+    setRedeemPoints(0);
+    setIdentityNumber('');
+    setSeat([]);
+    setWindowChecked(true);
+    setAisleChecked(false);
+    setFormState({
+      seat: {
+        error: false
+      },
+      identity: {
+        error: false
+      },
+      windowSeat: {
+        error: false
+      },
+      mileagePoints: {
+        error: false
+      }
+    })
+    props.handleClose();
+  }
+
   return (
-    <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title" fullWidth
+    <Dialog open={props.open} onClose={() => { onClose(); }} aria-labelledby="form-dialog-title" fullWidth
     maxWidth="md" >
       <DialogTitle id="form-dialog-title">Fill the details and Complete Booking</DialogTitle>
       <DialogContent>
@@ -173,7 +269,7 @@ const MakeBookingDialog = (props) => {
 
         <div style={{ display: "flex", justifyContent: 'space-between', padding: '20px'  }}>
             <TextField
-              label="Price"
+              label="Base Price"
               variant="outlined"
               placeholder = "Price"
               style={{marginRight: '20px'}}
@@ -190,8 +286,20 @@ const MakeBookingDialog = (props) => {
               required
               type="number"
               InputProps={{ inputProps: { min: '1', step: '1' } }}
-              onChange={(e) => {setTotalSeats(e.target.value)}}
+              onChange={(e) => {
+                setFormState({
+                  ...formState,
+                  seat: {
+                    ...formState.seat,
+                    error: false
+                  }
+                });
+                setPrice((props.flightDetails.price + (cabinType === 'Business' ? 100 : cabinType === 'FirstClass' ? 50 : 0)) * e.target.value);
+                setTotalSeats(e.target.value)
+              }}
               value={totalSeats}
+              error={formState?.seat?.error}
+              helperText={formState?.seat?.error ? 'Please select from the list' : ''}
             />
         </div>
 
@@ -204,7 +312,14 @@ const MakeBookingDialog = (props) => {
               fullWidth
               required
               value={cabinType}
-              onChange={(e) => setCabinType(e.target.value)}
+              onChange={(e) => {
+                setCabinType(e.target.value);
+                if (e.target.value === 'Business') {
+                  setPrice((props.flightDetails.price + 100) * totalSeats) ;
+                } else if (e.target.value === 'FirstClass') {
+                  setPrice((props.flightDetails.price + 50) * totalSeats);
+                }
+              }}
               select
             >
                 <MenuItem value="Economy">Economy</MenuItem>
@@ -217,8 +332,19 @@ const MakeBookingDialog = (props) => {
               placeholder = "Enter Passport Number"
               fullWidth
               required
-              onChange={(e) => {setIdentityNumber(e.target.value)}}
+              onChange={(e) => {
+                setFormState({
+                  ...formState,
+                  identity: {
+                    ...formState.identity,
+                    error: false
+                  }
+                });
+                setIdentityNumber(e.target.value)
+              }}
               value={identityNumber}
+              error={formState?.identity?.error}
+              helperText={formState?.identity?.error ? 'Please select 10 digit number' : ''}
             />
         </div>
         <div style={{ display: "flex", justifyContent: 'space-around', padding: '20px'  }}>
@@ -229,6 +355,7 @@ const MakeBookingDialog = (props) => {
             {aisleChecked && <FormControl className={classes.formControl}>
                 <InputLabel id="demo-mutiple-chip-label" style={{paddingLeft: '5px'}}>Select Window Seats<span style={{color: 'red', alignSelf: 'baseline', marginLeft: '10px'}}>*</span></InputLabel>
                     <Select
+                        error={formState?.windowSeat?.error}
                         classes={{ root: classes.selectRoot }}
                         labelId="demo-mutiple-chip-label"
                         id="demo-mutiple-chip"
@@ -251,10 +378,12 @@ const MakeBookingDialog = (props) => {
                             </MenuItem>
                         ))}
                     </Select>
+                    <FormHelperText style={{color: 'red'}}>{formState?.windowSeat?.error ? 'Please select same number as selected seat' : ''}</FormHelperText>
             </FormControl>}
             {windowChecked && <FormControl className={classes.formControl}>
                 <InputLabel id="demo-mutiple-chip-label" style={{paddingLeft: '5px'}}>Select Window Seats<span style={{color: 'red', alignSelf: 'baseline', marginLeft: '10px'}}>*</span></InputLabel>
                     <Select
+                        error={formState?.windowSeat?.error}
                         classes={{ root: classes.selectRoot }}
                         labelId="demo-mutiple-chip-label"
                         id="demo-mutiple-chip"
@@ -277,6 +406,7 @@ const MakeBookingDialog = (props) => {
                             </MenuItem>
                         ))}
                     </Select>
+                    <FormHelperText style={{color: 'red'}}>{formState?.windowSeat?.error ? 'Please select same number as selected seat' : ''}</FormHelperText>
             </FormControl>}
             {userDetails.mileagePoints > 0 && <TextField
               label="Mileage points"
@@ -286,22 +416,16 @@ const MakeBookingDialog = (props) => {
               required
               type='number'
               InputProps={{ inputProps: { max: '100' } }}
-              onChange={(e) => { setRedeemPoints(); }}
+              onChange={(e) => { setRedeemPoints(e.target.value); }}
               value={redeemPoints}
+              error={formState?.mileagePoints?.error}
+              helperText={formState?.mileagePoints?.error ? 'Maximum 100 points can be redeemed at a time' : ''}
             />}
         </div>
         
       </DialogContent>
       <DialogActions>
-        <ColorButton3 variant="contained" color="primary" onClick={(e) => { history.push({ pathname: '/Payment', state: {
-            flightDetails: props.flightDetails,
-            price,
-            totalSeats,
-            cabinType,
-            identityNumber,
-            redeemPoints,
-            seat
-            } }); }}>
+        <ColorButton3 variant="contained" color="primary" onClick={onBookClick}>
           Book Flight
         </ColorButton3>
       </DialogActions>
