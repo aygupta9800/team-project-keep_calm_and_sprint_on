@@ -21,25 +21,29 @@ router.post('/user', async (req, res) => {
             results =  await Users.findOne({empId: identifier});
         }
         if (results) {
-            bcrypt.compare(password,results.password, function(error,result){
-                if(!error){
+            bcrypt.compare(password,results.password, function(error,match){
+                if (error) {
+                    return res.status(400).json({msg: "Invalid email"});
+                }
+                if(match){
                     const token = jwt.sign({
                         data: {
                             email: results.email,
                             userType: results.userType
                         }
                       }, token_key, { expiresIn: '1h' });
-                      res.status(200).json({
+                      return res.status(200).json({
                         token: token,
                         msg: 'LoggedIn successfully',
                         data: results,
                     })
                 }
+                return res.status(400).json({msg: "Invalid password"})
             })
             
         }
         else{
-            res.status(401).json({msg:'Invalid user name and password'});
+            return res.status(400).json({msg:'Invalid credentials'});
         }
     
     } catch(error) {

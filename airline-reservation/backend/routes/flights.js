@@ -36,20 +36,20 @@ router.get('/:flightId', async (req, res) => {
     }  
 });
 //Add seats to all flight
-// router.post('/add/seats', async (req, res) => {
-//     try {
-//         let flights = await FlightDetail.find({});
-//         for (let i=0; i< flightsData.length; i++) {
-//             flights[i].seats = seatsArray;
-//             await flights[i].save();
-//         }
-//         // const result = flights.save();
-//         return res.status(200).json({data: 0})
-//     } catch(error) {
-//         console.log("error==", error);
-//         return res.status(500).json({msg: 'error'});
-//     }
-// })
+router.post('/add/seats', async (req, res) => {
+    try {
+        let flights = await FlightDetail.find({});
+        for (let i=0; i< flightsData.length; i++) {
+            flights[i].seats = seatsArray;
+            await flights[i].save();
+        }
+        // const result = flights.save();
+        return res.status(200).json({data: 0})
+    } catch(error) {
+        console.log("error==", error);
+        return res.status(500).json({msg: 'error'});
+    }
+})
 
 router.post('/add', async (req, res) => {
     try {
