@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import LandingNavbar from './LandingNavbar/LandingNavbar.js';
 import { ColorButton4 } from '../constants/index'
 import { userSignup } from '../state/action-creators/loginActions.js';
-
+import { storeSearchParams,  resetFlightData } from '../state/action-creators/flightActions';
 import {
   Grid,
   TextField,
@@ -54,9 +54,13 @@ const Signup = () => {
     if (userType === 'employee') {
      // history.push({pathname: '/Airline', state: {userType: 'Employee'} });
       dispatch(userSignup({ email , password, userName, userType }, history));
+      dispatch(storeSearchParams({}));
+      dispatch(resetFlightData())
     } else {
      // history.push({pathname: '/Airline', state: {userType: 'Customer'} });
       dispatch(userSignup({ email, password, userName, userType }, history));
+      dispatch(storeSearchParams({}));
+      dispatch(resetFlightData())
     }
   };
 

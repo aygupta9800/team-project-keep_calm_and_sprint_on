@@ -56,10 +56,19 @@ const Payment = (props) => {
 
   const bookingDetails = location.state;
 
+  const [formState, setFormState] = useState({
+    card: {
+      error: false
+    },
+    cvv: {
+      error: false
+    }
+  });
+
   const confirmBooking = () => {
       const bookingData = {
-        userId: bookingDetails.userId,
-        flightId: bookingDetails.flightId,
+        userId: bookingDetails.flightDetails.userId,
+        flightId: bookingDetails.flightDetails.flightId,
         totalSeatNeeded: bookingDetails.totalSeats,
         mileagePointsToUse: bookingDetails.redeemPoints,
         totalPricePaid: bookingDetails.totalSeats * (bookingDetails.price + (bookingDetails.cabinType === 'Economy' ? 0 : bookingDetails.cabinType === 'Business' ? 100 : 50)) - bookingDetails.redeemPoints,
@@ -67,7 +76,35 @@ const Payment = (props) => {
         identityNumber: bookingDetails.identityNumber,
         seats: bookingDetails.seat
       }
-      dispatch(makeBooking(bookingData));
+      let isValidated = true;
+      let cardNumberRegex = /^[0-9]{10}$/g; 
+      let cvvRegex = /^[0-9]{3}$/g;
+
+      let cardError = false;
+      let cvvError = false;
+
+      if (!cardnumber || (cardnumber && !cardnumber.toString().match(cardNumberRegex))) {
+        cardError = true;
+        isValidated = false;
+      }
+
+      if (!cvv || (cvv && !cvv.toString().match(cvvRegex))) {
+        cvvError = true;
+        isValidated = false;
+      }
+      if (!isValidated) {
+        setFormState({...formState, 
+          card: {
+            error: cardError
+          },
+          cvv: {
+            error: cvvError
+          }
+        })
+      }
+      if (isValidated) {
+        dispatch(makeBooking(bookingData, history));
+      }
   }
 
   return (
@@ -129,6 +166,8 @@ const Payment = (props) => {
                         required
                         onChange={(e) => {setCardNumber(e.target.value)}}
                         value={cardnumber}
+                        error={formState?.card?.error}
+                        helperText={formState?.card?.error ? 'Please enter valid card number' : ''}
                     />        
                     <TextField
                         label='CVV'
@@ -139,6 +178,8 @@ const Payment = (props) => {
                         required
                         onChange={(e) => {setCvv(e.target.value)}}
                         value={cvv}
+                        error={formState?.cvv?.error}
+                        helperText={formState?.cvv?.error ? 'Please enter valid cvv number' : ''}
                     />
                 </div>
             </div>
@@ -161,7 +202,7 @@ const Payment = (props) => {
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <p>Base Price:</p>
-                <p>{bookingDetails.price}$</p>
+                <p>{bookingDetails.basePrice}$</p>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <p>Cabin Type:</p>
@@ -178,7 +219,7 @@ const Payment = (props) => {
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <p>Total:</p>
                 <p>
-                  {bookingDetails.totalSeats * (bookingDetails.price + (bookingDetails.cabinType === 'Economy' ? 0 : bookingDetails.cabinType === 'Business' ? 100 : 50)) - bookingDetails.redeemPoints}$
+                  {bookingDetails.price - bookingDetails.redeemPoints}$
                 </p>
               </div>
             </div>
