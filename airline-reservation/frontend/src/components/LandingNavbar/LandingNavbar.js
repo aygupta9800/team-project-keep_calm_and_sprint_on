@@ -18,7 +18,10 @@ const LandingNavbar = (props) => {
       <Box component='nav'>
         <AppBar position='fixed' className='appbar'>
           <Toolbar className='toolbar'>
-            <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt='' onClick={() => {history.push('/');}}/>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <span style={{fontSize: '40px', fontWeight: 'bold', color: 'orange', fontFamily: 'auto'}}>United</span>
+                <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt='' onClick={() => {history.push('/');}}/>
+            </div>
             <div>
             <Button
               variant='contained'

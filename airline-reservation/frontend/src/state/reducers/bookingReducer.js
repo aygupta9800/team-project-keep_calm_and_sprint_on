@@ -1,4 +1,5 @@
 import {
+  CANCEL_BOOKING,
     GET_BOOKINGS
 } from '../action-creators/types';
   
@@ -12,6 +13,10 @@ import {
         return {
           ...state,
           bookings: action.payload.data
+        }
+      case CANCEL_BOOKING:
+        return {
+          ...state,
         }
       default:
         return state;

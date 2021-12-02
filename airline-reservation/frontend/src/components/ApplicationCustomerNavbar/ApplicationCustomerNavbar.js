@@ -132,7 +132,10 @@ const ApplicationCustomerNavbar = (props) => {
                 anchor='left'>
                 {sideList('left')}
             </MobileeRightMenuSlider>
-            <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt='' />
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <span style={{fontSize: '40px', fontWeight: 'bold', color: 'orange', fontFamily: 'auto'}}>United</span>
+                <img src={logo} style={{cursor: 'pointer'}} width='120' height='80' alt='' />
+            </div>
           </Toolbar>
         </AppBar>
       </Box>

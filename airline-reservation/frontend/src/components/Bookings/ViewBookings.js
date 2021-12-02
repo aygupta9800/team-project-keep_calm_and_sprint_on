@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import ApplicationEmployeeNavbar from '../ApplicationEmployeeNavbar/ApplicationEmployeeNavbar.js';
 import ApplicationCustomerNavbar from '../ApplicationCustomerNavbar/ApplicationCustomerNavbar.js';
 import StickyHeadTable from '../../constants/Table';
 import '../styles.css';
@@ -43,10 +44,14 @@ const ViewBookings = () => {
 
     return (
       <div>
-          <ApplicationCustomerNavbar  />
-          <div className='customLandingPage'>
+          {userDetails.userType === "employee" ? (
+        <ApplicationEmployeeNavbar />
+      ) : (
+        <ApplicationCustomerNavbar />
+      )}
+          <div className='customLandingPage' style={{marginTop: '120px'}}>
               <div style={{width: '90%', display: 'flex', marginBottom: '10px'}}>
-                  <h1 style={{fontWeight: 'bold', cursor: 'pointer'}} >View Flights</h1>
+                  <h1 style={{fontWeight: 'bold', cursor: 'pointer'}} >View Bookings</h1>
               </div>
               <hr />
               <StickyHeadTable columns={columns} rows={bookings} width='92.5%' isCancel />

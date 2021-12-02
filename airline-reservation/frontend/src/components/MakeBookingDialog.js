@@ -73,6 +73,7 @@ const MakeBookingDialog = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const userDetails = useSelector((state) => state.login.userDetails.data);
+  const mileage = useSelector((state) => state.login.mileage)
   const [price, setPrice] = useState(props.flightDetails.price);
   const [totalSeats, setTotalSeats] = useState(1);
   const [cabinType, setCabinType] = useState('Economy');
@@ -408,7 +409,7 @@ const MakeBookingDialog = (props) => {
                     </Select>
                     <FormHelperText style={{color: 'red'}}>{formState?.windowSeat?.error ? 'Please select same number as selected seat' : ''}</FormHelperText>
             </FormControl>}
-            {userDetails.mileagePoints > 0 && <TextField
+            {mileage > 0 && <TextField
               label="Mileage points"
               variant="outlined"
               placeholder = "Enter Mileage points to redeem"

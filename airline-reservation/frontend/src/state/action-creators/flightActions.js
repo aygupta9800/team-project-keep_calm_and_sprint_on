@@ -7,6 +7,7 @@ import {
   GET_FLIGHT_DETAILS,
   MAKE_BOOKING
 } from './types';
+import {setMileagePoints} from './loginActions';
 
 export const storeSearchParams = (searchDetails, history) => async (dispatch) => {
     dispatch({
@@ -45,6 +46,7 @@ export const makeBooking = (bookingDetails, history) => async (dispatch) => {
         type: MAKE_BOOKING,
         payload: response.data,
       });
+      dispatch(setMileagePoints(response.data.user.mileagePoints))
       alert("Booking Confirmed");
       dispatch(getFlightDetails());
       history.push('/ViewFlights');

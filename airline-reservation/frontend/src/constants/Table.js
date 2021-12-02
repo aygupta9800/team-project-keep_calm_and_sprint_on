@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -10,7 +10,9 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { ColorButton3 } from '../constants/index';
+import { cancelBooking } from '../state/action-creators/bookingAction';
 import MakeBookingDialog from '../components/MakeBookingDialog';
+import { getUserDetails } from '../state/action-creators/profileAction';
 
 export default function StickyHeadTable(props) {
   const [page, setPage] = useState(0);
@@ -20,6 +22,8 @@ export default function StickyHeadTable(props) {
   const flights = useSelector((state) => state.flight.flightDetails);
   const [allFlights, setAllFlights] = useState([]);
   const [flightDetails, setFlightDetails] = useState({});
+  const userDetails = useSelector((state) => state.login.userDetails.data);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setAllFlights(flights);
@@ -86,9 +90,9 @@ export default function StickyHeadTable(props) {
                     <TableCell key={`edit-${row.id}`}>
                       <ColorButton3 onClick={() => {handleOpen(row, true)}}>Book</ColorButton3>
                     </TableCell>}
-                    {props.isCancel &&
+                    {props.isCancel && userDetails.userType === 'user' &&
                     <TableCell key={`edit-${row.id}`}>
-                      <ColorButton3 onClick={() => {console.log(0)}}>Cancel Booking</ColorButton3>
+                      <ColorButton3 onClick={() => { dispatch(cancelBooking(row.bookingId, row.userId))}}>Cancel Booking</ColorButton3>
                     </TableCell>}
                   </TableRow>
                 );

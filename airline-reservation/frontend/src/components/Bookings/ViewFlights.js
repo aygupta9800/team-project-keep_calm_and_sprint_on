@@ -96,7 +96,7 @@ const ViewFlights = () => {
     return (
         <div>
             <ApplicationCustomerNavbar  />
-            <div className='customLandingPage'>
+            <div className='customLandingPage' style={{marginTop: '120px'}}>
                 <div style={{width: '90%', display: 'flex', marginBottom: '10px'}}>
                     <h1 style={{fontWeight: 'bold', cursor: 'pointer'}} >View Flights</h1>
                 </div>

@@ -4,6 +4,7 @@ import server from '../../Config';
 import {
   USER_LOGIN,
   USER_SIGNUP,
+  SET_MILEAGE_POINTS,
   LOGOUT_SUCCESS
  // import action types from here
 } from './types';
@@ -53,4 +54,11 @@ export const logout = (history) => async (dispatch) => {
     type: LOGOUT_SUCCESS,
   });
   history.push('/');
+};
+
+export const setMileagePoints = (mileage) => async (dispatch) => {
+  dispatch({
+    type: SET_MILEAGE_POINTS,
+    payload: mileage
+  });
 };
