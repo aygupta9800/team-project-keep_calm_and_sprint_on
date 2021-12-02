@@ -86,6 +86,10 @@ export default function StickyHeadTable(props) {
                     <TableCell key={`edit-${row.id}`}>
                       <ColorButton3 onClick={() => {handleOpen(row, true)}}>Book</ColorButton3>
                     </TableCell>}
+                    {props.isCancel &&
+                    <TableCell key={`edit-${row.id}`}>
+                      <ColorButton3 onClick={() => {console.log(0)}}>Cancel Booking</ColorButton3>
+                    </TableCell>}
                   </TableRow>
                 );
               })}
@@ -116,4 +120,5 @@ StickyHeadTable.propTypes = {
     rows: PropTypes.array,
     width: PropTypes.string,
     isEdit: PropTypes.bool,
+    isCancel: PropTypes.bool
 };

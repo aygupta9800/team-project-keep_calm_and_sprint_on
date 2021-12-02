@@ -5,8 +5,8 @@ import {
   GET_BOOKINGS
 } from './types';
 
-export const getBookings = () => async (dispatch) => {
-  axios.get(`${server}/booking/user/619bc9b2ea585778faad8f74`)
+export const getBookings = (userId) => async (dispatch) => {
+  axios.get(`${server}/booking/user/${userId}`)
     .then((response) => {
       dispatch({
         type: GET_BOOKINGS,
