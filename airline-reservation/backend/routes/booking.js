@@ -101,13 +101,14 @@ router.get('/flight/:flightId', async (req, res) => {
 
 router.put('/:bookingId', async (req, res) => {
     try {
-        const { bookingId, flightId, userId } = req.params;
+        const { bookingId, totalPricePaid } = req.params;
         const { flightClass } = req.body;
         const booking = await Booking.findById(bookingId);
         if (!booking) {
             return res.status(400).json({msg: 'Booking with given Id doesnt exist'});
         }
         booking.flightClass = flightClass;
+        booking.totalPricePaid = totalPricePaid;
         const savedbooking = await booking.save();
         const flight = await FlightDetail.findById(booking.flightId);
         const user = await User.findById(booking.userId);
