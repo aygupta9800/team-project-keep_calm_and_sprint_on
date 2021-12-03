@@ -15,7 +15,8 @@ export const userLogin = (userDetails, history) => async (dispatch) => {
       dispatch({
         type: USER_LOGIN,
         payload: response.data
-      })
+      });
+      dispatch(setMileagePoints(response.data.data.mileagePoints));
       if(userDetails.userType==='employee'){
         history.push({pathname: '/Airline', state: {userType: 'employee'} });
       } else{
@@ -35,7 +36,8 @@ export const userSignup = (userDetails, history) => async (dispatch) => {
       dispatch({
         type: USER_SIGNUP,
         payload: response.data
-      })
+      });
+      dispatch(setMileagePoints(response.data.data.mileagePoints));
         if(userDetails.userType==='employee'){
           history.push({pathname: '/Airline', state: {userType: 'employee'} });
         } else{

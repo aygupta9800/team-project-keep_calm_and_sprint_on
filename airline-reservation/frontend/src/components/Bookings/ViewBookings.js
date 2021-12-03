@@ -36,7 +36,15 @@ const ViewBookings = () => {
           seatNumbers: item.seatNumbers.length,
           totalPricePaid: item.totalPricePaid,
           userId: item.userId,
-          bookingId: item._id
+          bookingId: item._id,
+          duration: item.flightId.duration,
+          timings: `${item.flightId.startTime} - ${item.flightId.endTime}`,
+          origin: item.flightId.source,
+          destination: item.flightId.destination,
+          price: item.flightId.basePrice,
+          seats: item.seatNumbers,
+          flightId: item.flightId._id
+
         });
       }
       setBookings(rows);
@@ -54,7 +62,7 @@ const ViewBookings = () => {
                   <h1 style={{fontWeight: 'bold', cursor: 'pointer'}} >View Bookings</h1>
               </div>
               <hr />
-              <StickyHeadTable columns={columns} rows={bookings} width='92.5%' isCancel />
+              <StickyHeadTable columns={columns} rows={bookings} isEditBooking width='92.5%' isCancel />
           </div>
       </div>
     );

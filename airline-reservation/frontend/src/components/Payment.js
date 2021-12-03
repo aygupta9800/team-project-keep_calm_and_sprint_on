@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { Grid } from '@material-ui/core';
 import { ColorButton4 } from '../constants/index';
-import { makeBooking } from '../state/action-creators/flightActions';
+import { makeBooking, updateBooking } from '../state/action-creators/flightActions';
 import ApplicationCustomerNavbar from './ApplicationCustomerNavbar/ApplicationCustomerNavbar';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,15 +66,25 @@ const Payment = (props) => {
   });
 
   const confirmBooking = () => {
-      const seats = bookingDetails.flightDetails.seats.filter((item) => {
-          return bookingDetails.seat.includes(item.seatNumber)
-      });
+    let seats
+    if (!bookingDetails.isEdit) {
+      seats = bookingDetails.flightDetails.seats.filter((item) => {
+      return bookingDetails.seat.includes(item.seatNumber);
+    });
+    } else {
+      seats = bookingDetails.seat.map((item) => {
+      return {
+        seatNumber: item,
+        isBooked: false
+      }
+    });
+    }
       const bookingData = {
         userId: bookingDetails.flightDetails.userId,
         flightId: bookingDetails.flightDetails.flightId,
         totalSeatNeeded: bookingDetails.totalSeats,
         mileagePointsToUse: bookingDetails.redeemPoints,
-        totalPricePaid: bookingDetails.totalSeats * (bookingDetails.price + (bookingDetails.cabinType === 'Economy' ? 0 : bookingDetails.cabinType === 'Business' ? 100 : 50)) - bookingDetails.redeemPoints,
+        totalPricePaid: bookingDetails.totalSeats * (bookingDetails.basePrice + (bookingDetails.cabinType === 'Economy' ? 0 : bookingDetails.cabinType === 'Business' ? 100 : 50)) - bookingDetails.redeemPoints,
         flightClass: bookingDetails.cabinType,
         identityNumber: bookingDetails.identityNumber,
         seats: seats
@@ -106,7 +116,11 @@ const Payment = (props) => {
         })
       }
       if (isValidated) {
-        dispatch(makeBooking(bookingData, history));
+        if (!bookingDetails.isEdit) {
+          dispatch(makeBooking(bookingData, history));
+        } else {
+          dispatch(updateBooking({...bookingData, bookingId: bookingDetails.flightDetails.bookingId}, history));
+        }
       }
   }
 
