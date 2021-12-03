@@ -5,7 +5,8 @@ import {
   LOGOUT_SUCCESS,
   STORE_SEARCH_PARAMS,
   GET_FLIGHT_DETAILS,
-  MAKE_BOOKING
+  MAKE_BOOKING,
+  UPDATE_BOOKING
 } from './types';
 import {setMileagePoints} from './loginActions';
 
@@ -50,6 +51,25 @@ export const makeBooking = (bookingDetails, history) => async (dispatch) => {
       alert("Booking Confirmed");
       dispatch(getFlightDetails());
       history.push('/ViewFlights');
+      return true;
+    })
+    .catch((err) => {
+      alert(err);
+      return false;
+    });
+};
+
+export const updateBooking = (bookingDetails, history) => async (dispatch) => {
+  axios.put(`${server}/booking/${bookingDetails.bookingId}`, bookingDetails)
+    .then((response) => {
+      dispatch({
+        type: MAKE_BOOKING,
+        payload: response.data,
+      });
+      dispatch(setMileagePoints(response.data.user.mileagePoints))
+      alert("Booking Updated");
+      dispatch(getFlightDetails());
+      history.push('/Bookings');
       return true;
     })
     .catch((err) => {

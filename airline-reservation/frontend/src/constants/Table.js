@@ -12,12 +12,14 @@ import TableRow from '@mui/material/TableRow';
 import { ColorButton3 } from '../constants/index';
 import { cancelBooking } from '../state/action-creators/bookingAction';
 import MakeBookingDialog from '../components/MakeBookingDialog';
+import EditBookingDialog from '../components/EditBookingDialog';
 import { getUserDetails } from '../state/action-creators/profileAction';
 
 export default function StickyHeadTable(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [open, setOpen] = useState(false);
+  const [openBook, setOpenBook] = useState(false);
   const [seats, setSeats] = useState([]);
   const flights = useSelector((state) => state.flight.flightDetails);
   const [allFlights, setAllFlights] = useState([]);
@@ -33,6 +35,10 @@ export default function StickyHeadTable(props) {
     setOpen(false);
   };
 
+  const handleCloseBook = () => {
+    setOpenBook(false);
+  };
+
   const handleOpen = (row) => {
     let selected;
     if (allFlights.data.length > 0) {
@@ -44,6 +50,13 @@ export default function StickyHeadTable(props) {
     setFlightDetails(row);
     setOpen(true);
   }
+
+  const handleOpenBooking = (row) => {
+    setSeats(row.seats);
+    setFlightDetails(row);
+    setOpenBook(true);
+  }
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -90,6 +103,10 @@ export default function StickyHeadTable(props) {
                     <TableCell key={`edit-${row.id}`}>
                       <ColorButton3 onClick={() => {handleOpen(row, true)}}>Book</ColorButton3>
                     </TableCell>}
+                    {props.isEditBooking && userDetails.userType === 'user' &&
+                    <TableCell key={`edit2-${row.id}`}>
+                      <ColorButton3 onClick={() => {handleOpenBooking(row, true)}}>Edit</ColorButton3>
+                    </TableCell>}
                     {props.isCancel && userDetails.userType === 'user' &&
                     <TableCell key={`edit-${row.id}`}>
                       <ColorButton3 onClick={() => { dispatch(cancelBooking(row.bookingId, row.userId))}}>Cancel Booking</ColorButton3>
@@ -105,6 +122,12 @@ export default function StickyHeadTable(props) {
         seats={seats}
         flightDetails={flightDetails}
         handleClose={handleClose}
+      />}
+      {props.isEditBooking && <EditBookingDialog
+        open={openBook}
+        seats={seats}
+        flightDetails={flightDetails}
+        handleClose={handleCloseBook}
       />}
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
