@@ -24,8 +24,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
-app.use(cors({ origin: 'http://3.145.84.75:3008', credentials: true }));
-// app.use(cors({ origin: 'http://localhost:3008', credentials: true }));
+// app.use(cors({ origin: 'http://3.145.84.75:3008', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3008', credentials: true }));
 
 
 app.use(function (req, res, next) {
